@@ -6,14 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>RJ Cantrell's CS 498 Final Project</title>
 	
-	  <!-- Stylesheets?! -->
+	  <link rel=stylesheet href="styles.css" type="text/css" media="screen">
 	
-      <script src="https://d3js.org/d3.v4.min.js"></script>
+      <!--<script src="//d3js.org/d3.v4.min.js"></script>-->
+	  <!-- dev version (not minified) -->
+	  <script src="d3.js"></script>
 	  <script src="common.js"></script>
 	  <script src="d3_shotpct_linechart.js"></script>
+	  <script src="d3_playershots_linechart.js"></script>
 	  <script>
 		document.addEventListener('DOMContentLoaded', function() {
-			draw_chart("shotpct_linechart", 800, 600)
+			teamshots_linechart.draw("teamshots", 800, 600);
+			
+			playershots_linechart.draw("playershots", 800, 600);
 		}, false);
 	  </script>
   </head>
@@ -21,7 +26,6 @@
     <p>
         <ul>
             <b>//TODO:</b>
-            <li>Recreate first chart - line chart</li>
             <li>Recreate second chart</li>
             <li>Recreate third chart</li>
             <li>Fulfil project requirements, I guess</li>
@@ -32,6 +36,7 @@
 			<li>Recreate the first chart as a box plot maybe?</li>
         </ul>
     </p>
-    <div id="shotpct_linechart"></div>
+    <div id="teamshots"></div>
+	<div id="playershots"></div>
   </body>
 </html>

@@ -1,6 +1,7 @@
-//define constants we may want to use later
-var source = "http://localhost:8000"; //"."
-var padding = 20;
+!function() {
+
+var retVal = { };
+
 var measure = "Measure";
 var year = "Year";
 var value = "Value";
@@ -13,9 +14,9 @@ var avgcolor = "gray";
 
 function draw_chart(svg_container_id, width, height) {
 	
-	d3.csv(source + "/shotpct_team_by_year_summary.csv", function (error, data) {
+	d3.csv("/shotpct_team_by_year_summary.csv", function (error, data) {
 		if (error) { throw error; }
-		
+
 		//separate avg, min, and max series for separate plotting
 		var maxes = data.filter(function(row) { return row[measure] == max });
 		var mins = data.filter(function(row) { return row[measure] == min });
@@ -25,24 +26,44 @@ function draw_chart(svg_container_id, width, height) {
 		var xScale = d3.scaleLinear()
 							 .domain([d3.min(data, function(d) { return +d[year]; }),
 									  d3.max(data, function(d) { return +d[year]; })])
-							 .range([padding, width - padding*2])
+							 .range([common.margin.left, width - (common.margin.left + common.margin.right)])
 							 
 		var yScale = d3.scaleLinear()
 							 .domain([d3.min(data, function(d) { return +d[value]; }),
 									  d3.max(data, function(d) { return +d[value]; })])
-							 .range([height - padding*2, padding]) //SVG coords are backwards
+							 .range([height, common.margin.top]) //SVG coords are backwards
 		
 		//line-maker function
-		var lineGen = d3.svg.line()
-							  .x(function(d) { return xScale(d[year]); })
-							  .y(function(d) { return yScale(d[value]); });
+		var lineGen = common.lineGen.bind(this, xScale, yScale, year, value)();
 		
 		//create SVG elements
 		var svg = d3.select("div#" + svg_container_id)
 					.append("svg")
-					.attr("width", width)
-					.attr("height", height);
-					
+					.attr("width", width + common.margin.left + common.margin.right)
+					.attr("height", height + common.margin.top + common.margin.bottom);
+							   
+		//max line
+		svg.append("svg:path")
+		   .attr("d", lineGen(maxes)) 
+		   .attr("stroke", maxcolor)
+		   .attr("stroke-width", 2)
+		   .attr("fill", "none");
+		   
+		//min line
+		svg.append("svg:path")
+		   .attr("d", lineGen(mins))
+		   .attr("stroke", mincolor)
+		   .attr("stroke-width", 2)
+		   .attr("fill", "none");
+		   
+		//avg line
+		svg.append("svg:path")
+		   .attr("d", lineGen(avgs))
+		   .attr("stroke", avgcolor)
+		   .attr("stroke-width", 2)
+		   .attr("fill", "none");
+		   
+		//max datapoints
 		svg.selectAll("." + max)
 		   .data(maxes)
 		   .enter()
@@ -52,14 +73,9 @@ function draw_chart(svg_container_id, width, height) {
 		   .attr("cx", function(d) { return xScale(d[year]); })
 		   .attr("cy", function(d) { return yScale(d[value]); })
 		   .attr("fill", maxcolor)
-		   .attr("r","5")
+		   .attr("r","5");
 		   
-		avg.append("svg:path")
-		   .attr("d", lineGen(maxes))
-		   .attr("stroke", maxcolor)
-		   .attr("stroke-width", 2)
-		   .attr("fill", "none");
-		   
+		//min datapoints
 		svg.selectAll("." + min)
 		   .data(mins)
 		   .enter()
@@ -69,8 +85,9 @@ function draw_chart(svg_container_id, width, height) {
 		   .attr("cx", function(d) { return xScale(d[year]); })
 		   .attr("cy", function(d) { return yScale(d[value]); })
 		   .attr("fill", mincolor)
-		   .attr("r","5")
-		   
+		   .attr("r","5");
+		
+		//avg datapoints
 		svg.selectAll("." + avg)
 		   .data(avgs)
 		   .enter()
@@ -80,22 +97,48 @@ function draw_chart(svg_container_id, width, height) {
 		   .attr("cx", function(d) { return xScale(d[year]); })
 		   .attr("cy", function(d) { return yScale(d[value]); })
 		   .attr("fill", avgcolor)
-		   .attr("r","5")
+		   .attr("r","5");
 		
-		//TODO: attach max S% to SVG
-		//TODO: draw points for max S%
-		//TODO: draw line for max S%
+		//draw and label axes
+		var xAxis = d3.axisBottom(xScale).tickFormat(d3.format(".0f"));
+		var yAxis = d3.axisLeft(yScale);
 		
-		//TODO: draw and label axes
+		axes = svg.append("g");
 		
-		//TODO: attach min S% to SVG
-		//TODO: draw points for min S%
-		//TODO: draw line for min S%
+		//show X axis
+		axes.append("g")
+			.attr("transform", "translate(0," + height + ")")
+    		.call(xAxis);
+			
+		//show Y axis
+		var yAxisGroup = axes.append("g");
 		
-		//TODO: attach avg S% to SVG
-		//TODO: draw points for avg S%
-		//TODO: draw line for avg S%
+		var boundCustomYAxis = common.customYAxis.bind(null, yAxisGroup, yAxis, width);
 		
-		//TODO: add annotations
+		//TODO: should this attr go into common.customYAxis?
+		yAxisGroup.attr("transform", "translate(" + common.margin.left + ",0)")
+			.call(boundCustomYAxis);
+		
+		//tooltips
+		var tooltip = common.tooltip();
+		
+		//TODO: trim d[value] to X decimal places
+		svg.selectAll("circle")
+			.on("mouseover", function(d) {
+				tooltip.html("<strong>Year: " + d[year] + "</strong><br/>" + 
+						       "<strong>Shot %: " + d[value] + "</strong>");
+				tooltip.style("display","block");
+				tooltip.style("top", (d3.event.pageY + common.padding) + "px");
+				tooltip.style("left", (d3.event.pageX + common.padding) + "px");
+			})
+			.on("mouseout",function(d) { 
+				d3.select("body")
+					.select("." + common.tooltip_class)
+					.style("display","none");  
+			});
 	});
 }
+
+retVal.draw = draw_chart;
+this.teamshots_linechart = retVal;
+}();
