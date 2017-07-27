@@ -140,6 +140,7 @@ function update(data, svg_container_id, width, height)
 	//TODO: trim d[value] to X decimal places
 	svg.selectAll("circle")
 		.on("mouseover", function(d) {
+			d3.select(this).attr("stroke", "white").attr("stroke-width", 3);
 			tooltip.html("<div>" +
 						    "<div class='m-col-7'><strong>Year:</strong></div>" +
 							"<div class='m-col-5'>" + d[year] + "</div>" +
@@ -153,6 +154,8 @@ function update(data, svg_container_id, width, height)
 			tooltip.style("left", (d3.event.pageX + common.padding) + "px");
 		})
 		.on("mouseout",function(d) {
+			var oldColor = d3.select(this).attr("fill");
+			d3.select(this).attr("stroke", oldColor).attr("stroke-width", 1);
 			d3.select("body")
 				.select("." + common.tooltip_class)
 				.style("display","none");

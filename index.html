@@ -18,6 +18,7 @@
 	  <script src="common.js"></script>
 	  <script src="d3_shotpct_linechart.js"></script>
 	  <script src="d3_playershots_linechart.js"></script>
+      <script src="d3_playershots_ranking.js"></script>
 	  <script>
 		document.addEventListener('DOMContentLoaded', function() {
 			$('#fullpage').fullpage({
@@ -31,10 +32,11 @@
 									 'Top Scoring-Percentage Players']
 			});
 
-            var chart_width = $(window).width() * .6;
-            var chart_height = chart_width * 3 / 4
+            var chart_width = $(window).width() * .7;
+            var chart_height = chart_width * .6
 			teamshots_linechart.draw("teamshots", chart_width, chart_height);
 			playershots_linechart.draw("playershots", chart_width, chart_height);
+            playershots_ranking.draw("scorers", chart_width, chart_height);
 		}, false);
 	  </script>
   </head>
@@ -44,50 +46,32 @@
 			<div id="title" class="page-header">
 				<h1 align="center">He shoots... HE SCORES!</h1>
 				<h5 align="center">An exploration of scoring in the NHL, 1967-2017</h5>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<p>
+
+				<p class="text-info">
 					<ul>
 						<b>//TODO:</b>
-                        <li>why don't radio buttons work on second chart?</li>
-                        <li>why doesn't path work on second chart?</li>
 						<li>change axes color and axes labeling color to white</li>
+                        <li>add tooltip support to second chart</li>
 						<li>Recreate third chart</li>
 						<li>Add annotations to first chart</li>
 						<li>label axes</li>
 						<li>write better essay</li>
-						<li>Give second chart the ability to swap plotted stat</li>
 						<li>animated transitions for second chart</li>
 						<li>return D3 reference to point at minified file on CDN, not dev version</li>
 					</ul>
 				</p>
-				<p>
-				The Essay.
-
-				<p>The narrative visualization correctly follows the hybrid structure stated in the essay.
 
 				<p>My visualization is designed as a martini-glass. The user is led through several non-interactable scenes, before being left at an interactive visualization that allows them to chop away at the underlying data a bit. As in my midterm, we're after that age-old elusive question: What does it take to score? In the National Hockey League, I mean. The first scene sets a scene for general scoring ability across the league over time. The second diverts into the scorers themselves, and finally the third looks at it from the perspective of age and position. In this final visualization, several controls are displayed so that the user can choose for themselves what to plot, and for whom to plot it.
 
-				<p>The essay properly discusses the layout and design of the scenes of the narrative visualization.
+				<p class="text-info">The essay properly discusses the layout and design of the scenes of the narrative visualization.
 
+                <p>Watch the appropriate lectures again before answering this.
 
+				<p>Data can be highlighted in several ways in this visualization. All of the line charts display tooltips when hovered upon with the mouse. The first scene allows the user to display additional annotations. All these text elements follow a consistent theme.
 
-				<p>The essay properly discusses the application of the annotations of the narrative visualization.
-
-				<p>Data is highlighted in several ways in this visualization. All of the line charts display tooltips when hovered upon with the mouse. The first scene allows the user to display additional annotations. All these text elements follow a consistent theme.
-
-				<p>The essay properly discusses the parameters of the narrative visualization, including describing which parameters control the current state of the narrative visualization.
-
-				<p>The third scene shows the best use of parameters. In it, a selection of several statistics can be plotted. The user's selection is driven by a radio-button alongside the viz. Each statistic can be plotted for one, many, or all player positions. This is directly communicated to the user by a list of checkboxes alongside the viz. Interaction with these radio buttons and checkboxes are triggers for the viz to change state. Interactive controls are highlighted to the user with bright colors and bold font.
-
-				<p>The essay properly discusses the triggers, including what user events trigger what parameter value changes, and how the viewer is aware of available user events.
-
+				<p>The third scene shows the best use of triggers and parameters. Parameters for the viz include which stat is being plotted, and which position or positions are included. The statistic to be plotted is indicated by a radio-button alongside the viz, and the positions being plotted are indicated by checkboxes alongside the viz. Interaction with these radio buttons and checkboxes are triggers for the parameters to change, which in turn causes the viz to change state. Interactive controls are highlighted to the user with bright colors and bold font.
 
 				</p>
-				<br/>
 				<a class="down visible" id="moveDownBtn"
 				   onclick="$.fn.fullpage.moveSectionDown(); return false;">
 					<div class="a"></div>
@@ -136,7 +120,8 @@
 		</div>
 		<div class="section" data-anchors="slide3">
             <h2>Best Single-Season Shooters (min 5 shots)</h2>
-			<div id="scorers"></div>
+			<div id="scorers" class="col-xs-9"></div>
+            <div id="scorers_text" class="col-xs-3"></div>
 		</div>
 	</div>
   </body>

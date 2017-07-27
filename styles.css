@@ -1,3 +1,8 @@
+/* scrollable SVG containers if needed*/
+div.scrollable {
+  overflow: scroll;
+}
+
 /* D3 tooltip styling */
 .d3-tip {
   line-height: 1;

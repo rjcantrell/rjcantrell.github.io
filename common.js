@@ -48,7 +48,7 @@
 			.attr("stroke", common.colors.major_axes);
 
 		g.selectAll(".tick line")
-			.attr("stroke", common.colors.major_axes)
+			.attr("stroke", common.colors.major_axes);
 	};
 
 	common.customYAxis = function(g, yAxis, width) {
