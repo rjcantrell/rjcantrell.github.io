@@ -5,16 +5,16 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>RJ Cantrell's CS 498 Final Project</title>
-	
+
 	  <link rel=stylesheet href="//cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.4/jquery.fullpage.css" type="text/css">
 	  <link rel=stylesheet href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.7/darkly/bootstrap.min.css" type="text/css">
 	  <link rel=stylesheet href="styles.css" type="text/css" media="screen">
-	
-      <script src="//d3js.org/d3.v4.min.js"></script>
-	  <!--<script src="d3.js"></script> <!-- dev version (not minified) -->
+
+      <!-- <script src="//d3js.org/d3.v4.min.js"></script> -->
+	  <script src="d3.js"></script> <!-- dev version (not minified) -->
 	  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	  <script src="//cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.4/jquery.fullpage.js"></script>
-	  
+
 	  <script src="common.js"></script>
 	  <script src="d3_shotpct_linechart.js"></script>
 	  <script src="d3_playershots_linechart.js"></script>
@@ -22,6 +22,7 @@
 		document.addEventListener('DOMContentLoaded', function() {
 			$('#fullpage').fullpage({
 				keyboardScrolling: true,
+                anchors: ['intro','slide1','slide2','slide3'],
 				navigation: true,
 				navigationPosition: 'right',
 				navigationTooltips: ['Introduction',
@@ -29,14 +30,16 @@
 									 'Scoring By Position By Age',
 									 'Top Scoring-Percentage Players']
 			});
-			
-			teamshots_linechart.draw("teamshots", 800, 600);
-			playershots_linechart.draw("playershots", 800, 600);
+
+            var chart_width = $(window).width() * .6;
+            var chart_height = chart_width * 3 / 4
+			teamshots_linechart.draw("teamshots", chart_width, chart_height);
+			playershots_linechart.draw("playershots", chart_width, chart_height);
 		}, false);
 	  </script>
   </head>
   <body>
-	<div id="fullpage" class="container">
+	<div id="fullpage" class="container" data-anchors="intro">
 		<div class="section">
 			<div id="title" class="page-header">
 				<h1 align="center">He shoots... HE SCORES!</h1>
@@ -49,9 +52,10 @@
 				<p>
 					<ul>
 						<b>//TODO:</b>
+                        <li>why don't radio buttons work on second chart?</li>
+                        <li>why doesn't path work on second chart?</li>
 						<li>change axes color and axes labeling color to white</li>
 						<li>Recreate third chart</li>
-						<li>Label scenes (make em smaller)</li>
 						<li>Add annotations to first chart</li>
 						<li>label axes</li>
 						<li>write better essay</li>
@@ -62,35 +66,36 @@
 				</p>
 				<p>
 				The Essay.
-				
+
 				<p>The narrative visualization correctly follows the hybrid structure stated in the essay.
-				
+
 				<p>My visualization is designed as a martini-glass. The user is led through several non-interactable scenes, before being left at an interactive visualization that allows them to chop away at the underlying data a bit. As in my midterm, we're after that age-old elusive question: What does it take to score? In the National Hockey League, I mean. The first scene sets a scene for general scoring ability across the league over time. The second diverts into the scorers themselves, and finally the third looks at it from the perspective of age and position. In this final visualization, several controls are displayed so that the user can choose for themselves what to plot, and for whom to plot it.
-				
+
 				<p>The essay properly discusses the layout and design of the scenes of the narrative visualization.
-				
-				
-				
+
+
+
 				<p>The essay properly discusses the application of the annotations of the narrative visualization.
-				
+
 				<p>Data is highlighted in several ways in this visualization. All of the line charts display tooltips when hovered upon with the mouse. The first scene allows the user to display additional annotations. All these text elements follow a consistent theme.
-				
+
 				<p>The essay properly discusses the parameters of the narrative visualization, including describing which parameters control the current state of the narrative visualization.
-				
+
 				<p>The third scene shows the best use of parameters. In it, a selection of several statistics can be plotted. The user's selection is driven by a radio-button alongside the viz. Each statistic can be plotted for one, many, or all player positions. This is directly communicated to the user by a list of checkboxes alongside the viz. Interaction with these radio buttons and checkboxes are triggers for the viz to change state. Interactive controls are highlighted to the user with bright colors and bold font.
-				
+
 				<p>The essay properly discusses the triggers, including what user events trigger what parameter value changes, and how the viewer is aware of available user events.
-			
-				
+
+
 				</p>
 				<br/>
-				<a class="down visible" id="moveDownBtn" 
+				<a class="down visible" id="moveDownBtn"
 				   onclick="$.fn.fullpage.moveSectionDown(); return false;">
 					<div class="a"></div>
 				</a>
 			</div>
 		</div>
-		<div class="section">
+		<div class="section" data-anchors="slide1">
+            <h2>Max, Min, and Mean NHL Shooting Percentage, 1967 - 2017</h2>
 			<div id="teamshots" class="col-xs-9"></div>
 			<div id="teamshots_text" class="col-xs-3">
 				<p>This is some text about the first chart just to see what it looks like when there is some. Lorem Ipsum bacon bacon bacon</p>
@@ -105,7 +110,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="section">
+		<div class="section" data-anchors="slide2">
+            <h2>NHL Scoring Stats, By Player Age and Position</h2>
 			<div id="playershots" class="col-xs-9"></div>
 			<div id="playershots_text" class="col-xs-3">
 				<div class="row">
@@ -117,7 +123,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">			
+				<div class="row">
 					<div class="panel panel-primary invisible">
 						<div class="panel-heading">
 							<h3 class="panel-title">Positions to Plot</h3>
@@ -128,7 +134,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="section">
+		<div class="section" data-anchors="slide3">
+            <h2>Best Single-Season Shooters (min 5 shots)</h2>
 			<div id="scorers"></div>
 		</div>
 	</div>
