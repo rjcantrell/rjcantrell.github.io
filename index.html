@@ -6,37 +6,131 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>RJ Cantrell's CS 498 Final Project</title>
 	
+	  <link rel=stylesheet href="//cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.4/jquery.fullpage.css" type="text/css">
+	  <link rel=stylesheet href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.7/darkly/bootstrap.min.css" type="text/css">
 	  <link rel=stylesheet href="styles.css" type="text/css" media="screen">
 	
-      <!--<script src="//d3js.org/d3.v4.min.js"></script>-->
-	  <!-- dev version (not minified) -->
-	  <script src="d3.js"></script>
+      <script src="//d3js.org/d3.v4.min.js"></script>
+	  <!--<script src="d3.js"></script> <!-- dev version (not minified) -->
+	  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	  <script src="//cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.4/jquery.fullpage.js"></script>
+	  
 	  <script src="common.js"></script>
 	  <script src="d3_shotpct_linechart.js"></script>
 	  <script src="d3_playershots_linechart.js"></script>
 	  <script>
 		document.addEventListener('DOMContentLoaded', function() {
-			teamshots_linechart.draw("teamshots", 800, 600);
+			$('#fullpage').fullpage({
+				keyboardScrolling: true,
+				navigation: true,
+				navigationPosition: 'right',
+				navigationTooltips: ['Introduction',
+									 'Scoring By Team Per Year',
+									 'Scoring By Position By Age',
+									 'Top Scoring-Percentage Players']
+			});
 			
+			teamshots_linechart.draw("teamshots", 800, 600);
 			playershots_linechart.draw("playershots", 800, 600);
 		}, false);
 	  </script>
   </head>
   <body>
-    <p>
-        <ul>
-            <b>//TODO:</b>
-            <li>Recreate second chart</li>
-            <li>Recreate third chart</li>
-            <li>Fulfil project requirements, I guess</li>
-			<li>Separate each graph's JS into separate file?</li>
-			<li>Make it pretty</li>
-			<li>Write each graph as an HTML5 section</li>
-			<li>Do the cool screen-at-once scrolling and side-pips</li>
-			<li>Recreate the first chart as a box plot maybe?</li>
-        </ul>
-    </p>
-    <div id="teamshots"></div>
-	<div id="playershots"></div>
+	<div id="fullpage" class="container">
+		<div class="section">
+			<div id="title" class="page-header">
+				<h1 align="center">He shoots... HE SCORES!</h1>
+				<h5 align="center">An exploration of scoring in the NHL, 1967-2017</h5>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<p>
+					<ul>
+						<b>//TODO:</b>
+						<li>change axes color and axes labeling color to white</li>
+						<li>Recreate third chart</li>
+						<li>Label scenes (make em smaller)</li>
+						<li>Add annotations to first chart</li>
+						<li>label axes</li>
+						<li>write better essay</li>
+						<li>Give second chart the ability to swap plotted stat</li>
+						<li>animated transitions for second chart</li>
+						<li>return D3 reference to point at minified file on CDN, not dev version</li>
+					</ul>
+				</p>
+				<p>
+				The Essay.
+				
+				<p>The narrative visualization correctly follows the hybrid structure stated in the essay.
+				
+				<p>My visualization is designed as a martini-glass. The user is led through several non-interactable scenes, before being left at an interactive visualization that allows them to chop away at the underlying data a bit. As in my midterm, we're after that age-old elusive question: What does it take to score? In the National Hockey League, I mean. The first scene sets a scene for general scoring ability across the league over time. The second diverts into the scorers themselves, and finally the third looks at it from the perspective of age and position. In this final visualization, several controls are displayed so that the user can choose for themselves what to plot, and for whom to plot it.
+				
+				<p>The essay properly discusses the layout and design of the scenes of the narrative visualization.
+				
+				
+				
+				<p>The essay properly discusses the application of the annotations of the narrative visualization.
+				
+				<p>Data is highlighted in several ways in this visualization. All of the line charts display tooltips when hovered upon with the mouse. The first scene allows the user to display additional annotations. All these text elements follow a consistent theme.
+				
+				<p>The essay properly discusses the parameters of the narrative visualization, including describing which parameters control the current state of the narrative visualization.
+				
+				<p>The third scene shows the best use of parameters. In it, a selection of several statistics can be plotted. The user's selection is driven by a radio-button alongside the viz. Each statistic can be plotted for one, many, or all player positions. This is directly communicated to the user by a list of checkboxes alongside the viz. Interaction with these radio buttons and checkboxes are triggers for the viz to change state. Interactive controls are highlighted to the user with bright colors and bold font.
+				
+				<p>The essay properly discusses the triggers, including what user events trigger what parameter value changes, and how the viewer is aware of available user events.
+			
+				
+				</p>
+				<br/>
+				<a class="down visible" id="moveDownBtn" 
+				   onclick="$.fn.fullpage.moveSectionDown(); return false;">
+					<div class="a"></div>
+				</a>
+			</div>
+		</div>
+		<div class="section">
+			<div id="teamshots" class="col-xs-9"></div>
+			<div id="teamshots_text" class="col-xs-3">
+				<p>This is some text about the first chart just to see what it looks like when there is some. Lorem Ipsum bacon bacon bacon</p>
+				<div class="row padded">
+					<button id="graph1_annotation1" class="btn btn-primary" onclick="teamshots_linechart.annotation_1();">Fun Fact 1</button>
+				</div>
+				<div class="row padded">
+					<button id="graph1_annotation2" class="btn btn-primary" onclick="teamshots_linechart.annotation_2();">Fun Fact 2</button>
+				</div>
+				<div class="row padded">
+					<button id="graph1_annotation3" class="btn btn-primary" onclick="teamshots_linechart.annotation_3();">Fun Fact 3</button>
+				</div>
+			</div>
+		</div>
+		<div class="section">
+			<div id="playershots" class="col-xs-9"></div>
+			<div id="playershots_text" class="col-xs-3">
+				<div class="row">
+					<div class="panel panel-primary invisible">
+						<div class="panel-heading">
+							<h3 class="panel-title">Stat to Plot</h3>
+						</div>
+						<div class="panel-body" id="chart2_statpanel">
+						</div>
+					</div>
+				</div>
+				<div class="row">			
+					<div class="panel panel-primary invisible">
+						<div class="panel-heading">
+							<h3 class="panel-title">Positions to Plot</h3>
+						</div>
+						<div class="panel-body" id="chart2_positionpanel">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="section">
+			<div id="scorers"></div>
+		</div>
+	</div>
   </body>
 </html>

@@ -4,14 +4,31 @@
 	common.padding = 20;
 	common.margin = { top: 20, right: 20, bottom: 20, left: 20 };
 	
-	common.axiscolor = "#777";
-	common.tooltip_class = "d3-tip";
+	common.colors = 
+	{
+		danger: "#e74c3c",		//from Bootstrap-Darkly.
+		warning: "#f39c12",		//I wish SVGs could consume existing HTML-CSS
+		success: "#00bc8c",		//do they turn their nose down at the plebian "color:"?
+		
+		major_axes: "white",
+		minor_axes: "#555",
+	}
 	
+	common.tooltip_class = "d3-tip";
 	common.tooltip = function() { 
 		return d3.select("body")
 					.append("div")
 					.attr("class", common.tooltip_class)
 					.style("display", "none")
+					.style("position", "absolute");
+	};
+	
+	common.named_tooltip = function(name) {
+		return d3.select("body")
+					.append("div")
+					.attr("class", common.tooltip_class)
+					.attr("id", name)
+					//.style("display", "none")
 					.style("position", "absolute");
 	};
 	
@@ -23,8 +40,12 @@
 	
 	common.customYAxis = function(g, yAxis, width) {
 		g.call(yAxis);
+		g.selectAll(".tick text")
+			.attr("class","axes");
+			.attr("stroke", common.colors.major_axes);
+			
 		g.selectAll(".tick line")
-			.attr("stroke", "#555")
+			.attr("stroke", common.colors.minor_axes)
 			.attr("stroke-dasharray", "2,2")
 			.attr("x2", width - common.margin.left - common.margin.right - common.padding);
 	};
