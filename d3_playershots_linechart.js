@@ -8,8 +8,8 @@ var age = "age";
 var pos = "position";
 var record_count = "record_count";
 
-var panel_radio = "chart2_statpanel";
-var panel_checks = "chart2_positionpanel";
+var panel_radio = "playershots_statpanel";
+var panel_checks = "playershots_positionpanel";
 
 var group_axes = "axes";
 
@@ -70,7 +70,7 @@ function build() {
 		.remove("invisible");	//FINALLY.*/
 
 		//radio buttons for available stats
-		var radio_panel = d3.select("div#chart2_statpanel")
+		var radio_panel = d3.select("div#" + panel_radio)
 		if (!radio_panel.empty()) {
 			radio_panel._groups[0][0].parentNode.classList.remove("invisible");
 		}
@@ -100,8 +100,8 @@ function build() {
 						.text(stats[s]);
 		}
 
-		//checkboxes for positions displayed (in #chart2_positionpanel)
-		var check_panel = d3.select("div#chart2_positionpanel");
+		//checkboxes for positions displayed (in #playershots_positionpanel)
+		var check_panel = d3.select("div#playershots_positionpanel");
 		if (!check_panel.empty()) {
 			check_panel._groups[0][0].parentNode.classList.remove("invisible");
 		}
@@ -131,18 +131,15 @@ function update() {
 	//decide which stat to plot
 	var selected_radio = d3.select("div#" + panel_radio)
 							.selectAll("input")
-							.filter(function() { return this.type == "radio"; })
 							.filter(function() { return this.checked == true })
 							._groups[0][0];
 
 	var stat_to_plot = selected_radio.id;
 
 	//decide which players' data to plot based on which checkboxes are checked
-	var checks = d3.select("div#" + panel_checks)
-				.selectAll("input")
-				.filter(function() { return this.type == "checkbox"; })
-				.filter(function() { return this.checked == true })
-				._groups[0]; //this is dumb, but if I don't, I get a d3 selection object, not the inputs
+	var checks =  d3.selectAll("div#" + panel_checks + " input")
+						.filter(function() { return this.checked == true })
+						._groups[0]; //this is dumb, but if I don't, I get a d3 selection object, not the inputs
 
 	//build a dataset from positions' component datasets
 	checks.forEach(function(e) { data = data.concat(skater_data[e.id]); });
@@ -166,13 +163,12 @@ function update() {
 	var xAxis = d3.axisBottom(xScale).tickFormat(d3.format(".0f"));
 	var yAxis = d3.axisLeft(yScale);
 
-	//TODO: is it better to remove and recreate or upsert the item?
-	//probably upsert, if you're going to animate between them...
+	//TODO: probably better to use the general update pattern here...
 	var svg = d3.select("div#" + this.svg_container_id)
 					.select("svg");
 
-	//or, remove and re-add.
-	svg.select("g").filter(function() { return this.id == group_axes; }).remove();
+	//but, let's remove and re-add because there's a deadline
+	svg.select("g#" + group_axes).remove();
 	var axes = svg.append("g").attr("id", group_axes);
 
 	//show X axis
@@ -213,21 +209,6 @@ function update() {
 		   .attr("cy", function(d) { return yScale(d[stat_to_plot]); })
 		   .attr("fill", common.colors.success)
 		   .attr("r","5");
-}
-
-function upsert_element_by_id(container, tag, id) {
-	var exists = container.select(tag)
-		.filter(function() { return this.id == id }); //.append("g");
-
-	if (axes_exist.empty())	{
-		svg.append(tag).attr("id", id);
-		retVal = container.select(tag)
-							.filter(function() { return this.id == id });
-	} else {
-		retVal = exists;
-	}
-
-	return retVal;
 }
 
 function plottable_by_age(data, column_name) {

@@ -10,17 +10,19 @@ function initialize(svg_container_id, width, height) {
 }
 
 function update(data, svg_container_id, width, height) {
+
+    //TODO: how should height be determined? font height * dataset length?
+
     //create SVG elements
     var svg = d3.select("div#" + svg_container_id)
                 .attr("class", "scrollable")
                     .append("svg")
                     .attr("width", width + common.margin.left + common.margin.right)
                     .attr("height", height + common.margin.top + common.margin.bottom);
-
     //TODO: append an iframe or something, for the scrollbar
                 //can we get that scrollbar inside, so axis is visible?
                 //might need to append two: data inside iframe, axes outside
-    //TODO: append an SVG element (or maybe two)
+
     //TODO: build an X scale and axis
     //TODO: display X axis
     //TODO: for each data element, plot the name on the left

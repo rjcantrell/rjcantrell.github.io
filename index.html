@@ -10,10 +10,11 @@
 	  <link rel=stylesheet href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.7/darkly/bootstrap.min.css" type="text/css">
 	  <link rel=stylesheet href="styles.css" type="text/css" media="screen">
 
-      <!-- <script src="//d3js.org/d3.v4.min.js"></script> -->
-	  <script src="d3.js"></script> <!-- dev version (not minified) -->
+      <script src="//d3js.org/d3.v4.min.js"></script>
+	  <!--<script src="d3.js"></script> <!-- dev version (not minified) -->
 	  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	  <script src="//cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.4/jquery.fullpage.js"></script>
+      <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 	  <script src="common.js"></script>
 	  <script src="d3_shotpct_linechart.js"></script>
@@ -36,7 +37,26 @@
             var chart_height = chart_width * .6
 			teamshots_linechart.draw("teamshots", chart_width, chart_height);
 			playershots_linechart.draw("playershots", chart_width, chart_height);
-            playershots_ranking.draw("scorers", chart_width, chart_height);
+            //playershots_ranking.draw("scorers", chart_width, chart_height);
+
+            //initialize buttons that can create popovers
+            //this works relative to the button if you comment the .popover styling in styles.css
+            $('[data-toggle="popover"]').popover();
+
+            /*
+            $("#show_annotation1").on('click', function(e) {
+                    $('#teamshots div.annotation1').popover('toggle');
+            });
+            $("#show_annotation1").popover();
+
+            $("#show_annotation2").on('click', function(e) {
+                    $('#teamshots div.annotation2').popover('toggle');
+            });
+
+            $("#show_annotation3").on('click', function(e) {
+                    $('#teamshots div.annotation3').popover('toggle');
+            });
+            */
 		}, false);
 	  </script>
   </head>
@@ -57,23 +77,25 @@
 						<li>label axes</li>
 						<li>write better essay</li>
 						<li>animated transitions for second chart</li>
+                        <li>add navbar to show which slide you're on</li>
 						<li>return D3 reference to point at minified file on CDN, not dev version</li>
 					</ul>
 				</p>
 
-				<p>My visualization is designed as a martini-glass. The user is led through several non-interactable scenes, before being left at an interactive visualization that allows them to chop away at the underlying data a bit. As in my midterm, we're after that age-old elusive question: What does it take to score? In the National Hockey League, I mean. The first scene sets a scene for general scoring ability across the league over time. The second diverts into the scorers themselves, and finally the third looks at it from the perspective of age and position. In this final visualization, several controls are displayed so that the user can choose for themselves what to plot, and for whom to plot it.
+				<p>My visualization is designed as a martini-glass. The user is led through several non-interactive scenes, before being left at an interactive visualization that allows them to chop away at the underlying data a bit. As in my midterm, we're chasing that age-old elusive question: What does it take to score? In the National Hockey League, I mean. The first scene sets a scene for general scoring ability across the league over time. The second diverts into the scorers themselves, and finally the third looks at it from the perspective of age and position. In this final visualization, several controls are displayed so that the user can choose for themselves what to plot, and for whom to plot it.
 
 				<p class="text-info">The essay properly discusses the layout and design of the scenes of the narrative visualization.
 
                 <p>Watch the appropriate lectures again before answering this.
 
-				<p>Data can be highlighted in several ways in this visualization. All of the line charts display tooltips when hovered upon with the mouse. The first scene allows the user to display additional annotations. All these text elements follow a consistent theme.
+				<p>Data can be highlighted in several ways in this visualization. All of the line charts display tooltips when hovered upon with the mouse. I apologize for the lame positioning -- I could confirm their attachment to the exact svg.circle:nth-child() or to the right tick on the axes, but they don't show through the svg canvas, regardless of being created before or after the data-plotting elements. Couldn't even sneak a Bootstrap row and X column children to attach it to. Ugh, computers.
 
 				<p>The third scene shows the best use of triggers and parameters. Parameters for the viz include which stat is being plotted, and which position or positions are included. The statistic to be plotted is indicated by a radio-button alongside the viz, and the positions being plotted are indicated by checkboxes alongside the viz. Interaction with these radio buttons and checkboxes are triggers for the parameters to change, which in turn causes the viz to change state. Interactive controls are highlighted to the user with bright colors and bold font.
 
 				</p>
-				<a class="down visible" id="moveDownBtn"
-				   onclick="$.fn.fullpage.moveSectionDown(); return false;">
+
+                <!-- "scroll down" indicator (also scrolls page when clicked) -->
+				<a class="down visible" onclick="$.fn.fullpage.moveSectionDown(); return false;">
 					<div class="a"></div>
 				</a>
 			</div>
@@ -82,15 +104,29 @@
             <h2>Max, Min, and Mean NHL Shooting Percentage, 1967 - 2017</h2>
 			<div id="teamshots" class="col-xs-9"></div>
 			<div id="teamshots_text" class="col-xs-3">
-				<p>This is some text about the first chart just to see what it looks like when there is some. Lorem Ipsum bacon bacon bacon</p>
+				<p>Goalies are notably absent from shooting data, for obvious reasons, so let's give a little attention to the psycopaths on the other end of these 100-mph projectiles:</p>
 				<div class="row padded">
-					<button id="graph1_annotation1" class="btn btn-primary" onclick="teamshots_linechart.annotation_1();">Fun Fact 1</button>
+					<!-- <button id="show_annotation1" class="btn btn-primary">In 1974...</button> -->
+                    <!--
+                    var ann1 = d3.select("div#" + svg_container_id).append("div")
+                                        .classed("annotation1", true)
+                                        .classed("")
+                                        .attr("id", "teamshots_annotation1")
+                                        .attr("data-original-title", "1974")
+                                        .attr("data-content", "The first modern 'cage' style goalie masks are introduced, and the last goalie to play without a mask retires")
+                                        .attr("data-placement", "bottom")
+                                        .attr("style", "top: 10px !important; left: 60px !important;")
+                                        ;
+                    -->
+                    <button class="btn btn-primary popper" data-toggle="popover" title="1974" data-content="The first modern 'cage' style goalie masks are introduced, and the last goalie to play without a mask retires" data-placement="left">In 1974...</button>
 				</div>
 				<div class="row padded">
-					<button id="graph1_annotation2" class="btn btn-primary" onclick="teamshots_linechart.annotation_2();">Fun Fact 2</button>
+					<!--<button id="show_annotation2" class="btn btn-primary">In 1986...</button>-->
+                    <button class="btn btn-primary popper" data-toggle="popover" title="1986" data-content="Patrick Roy popularizes 'butterfly'-style goaltending, winning the Stanley Cup as a rookie. It remains the dominant style today. Goalies also start wearing grotesquely-large shoulder and leg pads" data-placement="left">In 1986...</button>
 				</div>
 				<div class="row padded">
-					<button id="graph1_annotation3" class="btn btn-primary" onclick="teamshots_linechart.annotation_3();">Fun Fact 3</button>
+					<!--<button id="show_annotation3" class="btn btn-primary">In 2006...</button>-->
+                    <button id="show_annotation3" class="btn btn-primary popper" data-toggle="popover" title="2006" data-content="During the lockout year, the NHL develops new rules to increase scoring. These include restrictions on maximum goalie pad size, legalization of the 'two-line pass', and a prohibition on goalies playing the puck in the corners of the rink" data-placement="left">In 2006...</button>
 				</div>
 			</div>
 		</div>
@@ -103,7 +139,7 @@
 						<div class="panel-heading">
 							<h3 class="panel-title">Stat to Plot</h3>
 						</div>
-						<div class="panel-body" id="chart2_statpanel">
+						<div class="panel-body" id="playershots_statpanel">
 						</div>
 					</div>
 				</div>
@@ -112,7 +148,7 @@
 						<div class="panel-heading">
 							<h3 class="panel-title">Positions to Plot</h3>
 						</div>
-						<div class="panel-body" id="chart2_positionpanel">
+						<div class="panel-body" id="playershots_positionpanel">
 						</div>
 					</div>
 				</div>
