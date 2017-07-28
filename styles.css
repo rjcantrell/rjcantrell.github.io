@@ -3,9 +3,22 @@
     background: whitesmoke;
 }
 
+/* more padding for list items in acknowledgements */
+#acks li {
+    padding: 10px;
+}
+
 /* scrollable SVG containers if needed*/
 div.scrollable {
   overflow-x: hidden;
+}
+
+/* image for the acknowledgements screen to try to class up the place */
+div.phil-kessel {
+    height: 500px;
+    background-image: url('phil-kessel-stanley-cup.jpg');
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 /* D3 tooltip styling */

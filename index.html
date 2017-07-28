@@ -24,13 +24,14 @@
 		document.addEventListener('DOMContentLoaded', function() {
 			$('#fullpage').fullpage({
 				keyboardScrolling: true,
-                anchors: ['intro','teamshots','scorers','playershots'],
+                //anchors: ['intro','teamshots','scorers','playershots'],
 				navigation: true,
 				navigationPosition: 'right',
 				navigationTooltips: ['Introduction'
                                     ,'Scoring By Team Per Year'
                                     ,'Top Scoring-Percentage Players'
                                     ,'Scoring By Position By Age'
+                                    ,'Acknowledgements'
 									]
 			});
 
@@ -63,23 +64,22 @@
   </head>
   <body>
     <!-- the entire content of the page is set into a fullPage.js container to be scrolled -->
-	<div id="fullpage" class="container" data-anchors="intro">
+	<div id="fullpage" class="container"> <!-- data-anchors="intro"> -->
         <!-- begin intro -->
 		<div class="section">
 			<div id="title" class="page-header">
 				<h1 align="center">He shoots... HE SCORES!</h1>
 				<h5 align="center">An exploration of scoring in the NHL, 1967-2017</h5>
 
-				<p>My visualization is designed as a martini-glass. The user is led through several non-interactive scenes, before being left at an interactive visualization that allows them to chop away at the underlying data a bit. As in my midterm, we're chasing that age-old elusive question: What does it take to score? In the National Hockey League, I mean. The first scene sets a scene for general scoring ability across the league over time. The second diverts into the scorers themselves, and finally the third looks at it from the perspective of age and position. In this final visualization, several controls are displayed so that the user can choose for themselves what to plot, and for whom to plot it.
+				<p>My visualization is designed as a martini-glass. The user is led through several non-interactive scenes, before being left at an interactive visualization that allows them to chop away at the underlying data a bit. It even makes a half-hearted effort at responsive design by sizing all the charts based on the window size at the time of page-load. As in my midterm, we're chasing that age-old elusive question: What does it take to score? In the National Hockey League, I mean. The first scene sets a scene for general scoring ability across the league over time. The second diverts into the scorers themselves, and finally the third looks at it from the perspective of age and position. In this final visualization, several controls are displayed so that the user can choose for themselves what to plot, and for whom to plot it.
 
 				<p class="text-info">The essay properly discusses the layout and design of the scenes of the narrative visualization.
 
                 <p>Watch the appropriate lectures again before answering this.
 
-				<p>Data can be highlighted in several ways in this visualization. All of the line charts display tooltips when hovered upon with the mouse. I apologize for the lame positioning -- I could confirm their attachment to the exact svg.circle:nth-child() or to the right tick on the axes, but they don't show through the svg canvas, regardless of being created before or after the data-plotting elements. Couldn't even sneak a Bootstrap row and X column children to attach it to. Ugh, computers.
+				<p>Data can be highlighted in several ways in this visualization. All charts display tooltips when hovering over data elements upon with the mouse. The first has additional Bootstrap annotations, but I apologize for the lame positioning -- I could confirm their attachment to the exact svg.circle:nth-child() or to the right tick on the axes, but when attached deep inside the SVG, Bootstrap popovers don't show through the SVG canvas, regardless of being created before or after the data-plotting elements. Couldn't even sneak a Bootstrap row and columns inside the container to attach it to. Ugh, computers, amirite?
 
 				<p>The third scene shows the best use of triggers and parameters. Parameters for the viz include which stat is being plotted, and which position or positions are included. The statistic to be plotted is indicated by a radio-button alongside the viz, and the positions being plotted are indicated by checkboxes alongside the viz. Interaction with these radio buttons and checkboxes are triggers for the parameters to change, which in turn causes the viz to change state. Interactive controls are highlighted to the user with bright colors and bold font.
-
 				</p>
 
                 <!-- "scroll down" indicator (also scrolls page when clicked) -->
@@ -91,7 +91,7 @@
         <!-- end intro -->
 
         <!-- begin first chart: Scoring, by Team, by Year -->
-		<div class="section" data-anchors="teamshots">
+		<div class="section"> <!-- data-anchors="teamshots"> -->
             <h2>Max, Min, and Mean NHL Shooting Percentage, 1967 - 2017</h2>
 			<div id="teamshots" class="col-xs-9"></div>
 			<div id="teamshots_text" class="col-xs-3">
@@ -124,7 +124,7 @@
         <!-- end first chart: Scoring, by Team, by Year -->
 
         <!-- begin second chart: Top Scoring Percentage -->
-        <div class="section" data-anchors="scorers">
+        <div class="section"> <!-- data-anchors="scorers"> -->
             <h2 class="no_bottom_margin">Best Single-Season Shooting % (min 5 shots)</h2>
             <small>Asterisk indicates a Hall of Fame member</small>
             <br/>
@@ -152,7 +152,7 @@
         <!-- end second chart: Top Scoring Percentage -->
 
         <!-- begin third chart: Several scoring stats by Age, for position -->
-		<div class="section" data-anchors="playershots">
+		<div class="section"> <!-- data-anchors="playershots"> -->
             <h2>NHL Scoring Stats, By Player Age and Position</h2>
 			<div id="playershots" class="col-xs-9"></div>
 			<div id="playershots_text" class="col-xs-3">
@@ -176,8 +176,35 @@
 				</div>
 			</div>
 		</div>
-        <!-- begin third chart: Several scoring stats by Age, for position -->
+        <!-- end third chart: Several scoring stats by Age, for position -->
+        <div id="acks" class="section">
+            <h2>Acknowledgements</h2>
+            <p>By lines of code, other people wrote most of my final project, and I am truly standing on the shoulders of giants.
+            <div class="row">
+                <div class="col-xs-3 phil-kessel"></div>
+                <div class="col-xs-9">
+                    <p>
+                        <ul>Thanks go out to:
+                            <li><a href="https://twitter.com/mdo">Mark Otto</a>, <a href="https://twitter.com/fat">Jacon Thornton</a>, and the <a href="https://github.com/orgs/twbs/people">rest of the developers</a> of <a href="https://getbootstrap.com/">Bootstrap</a> and its <a href="http://usebootstrap.com/theme/darkly">Darkly theme</a></li>
 
+                            <li><a href="https://alvarotrigo.com/">Álvaro Trigo</a>, developer of <a href="https://alvarotrigo.com/fullPage/">fullPage</a></li>
+
+                            <li><a href="https://www.linkedin.com/in/jeresig/">John Resig</a>, and the <a href="https://jquery.org/team/">rest of the developers</a> of <a href="https://jquery.com/">jQuery</a>. I don't use it, but fullPage does</li>
+
+                            <li><a href="https://bost.ocks.org/mike/">Mike Bostock</a>, and the <a href="https://github.com/d3/d3/graphs/contributors">rest of the contributors</a> to the <a href="https://d3js.org/">D3 project</a></li>
+
+                            <li>The team behind this <a href="https://cse442-17s.github.io/Weather-and-Bike-Sharing-in-San-Francisco/final/">this UW CSE 442 project</a> for inspiration (and a few peeks at their source)</li>
+
+                            <li><a href="https://www.sports-reference.com/about.html">The Sports-Reference.com team</a> for providing an easily-scraped data source, <a href="https://www.hockey-reference.com/">Hockey-Reference.com</a></li>
+
+                            <li>The <a href="https://www.hockey-reference.com/teams/PIT/2017.html">2017 Pittsburgh Penguins</a> for not choking when facing the impeccable <a href="https://www.hockey-reference.com/players/r/rinnepe01.html">Pekka Rinne</a></li>
+
+                            <li>And you, for reading this far. SEE YOU NEXT MISSON!</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
 	</div>
   </body>
 </html>
