@@ -21,67 +21,44 @@ function initialize(svg_container_id, width, height) {
 		//add_annotations();
 	});
 
-	//forget it all. I'm just going to put this on the button that drives it, instead
-	//of figuring out how to float bootstrap divs over the svg in a way that is reproducible
-	//and not seemingly random (and prey to the fact that nth-child doesn't work if popover
-	//literally removes it from the DOM)
+	d3.select("div#" + svg_container_id)
+		.append("div")
+		.classed("annotation1", true)
+		.attr("id", "teamshots_annotation1")
+		.attr("data-original-title", "1974")
+		.attr("data-content", "The first modern 'cage' style goalie masks are introduced, and the last goalie to play without a mask retires")
+		.attr("data-placement", "bottom")
+		//you can't position the popover here, because it's not THIS that actually displays
+		//the popover. The visual page element is dropped in as a sibling with a
+		//random ID number, so I don't know a better way to select it than as a sibling.
+		//you can't style the visual element before the button is clicked, as it
+		//does not exist in the DOM beforehand.
 
-	//beyond here are only ghosts...
+		//.attr("style", "top: 10px !important; left: 60px !important;")
+		.text(" ")
+		;
 
-	//if not in a func, this happens first, because update() is async and will likely finish later.
-	//Should it be here? You'd have better control over where to stick these things
-	//in terms of (x,y) than just making a parent-child relationship to the empty
-	//box.
-	//function add_annotations() {
-		//create containers for annotation popovers to be dropped into
-		//style doesn't seem to be respected - placement is centered below svg area
+	d3.select("div#" + svg_container_id)
+		.append("div")
+		.attr("class","annotation2")
+		.attr("id", "teamshots_annotation2")
+		.attr("data-original-title", "1986")
+		.attr("data-content", "Patrick Roy popularizes 'butterfly'-style goaltending, winning the Stanley Cup as a rookie. It remains the dominant style today. Goalies also start wearing grotesquely-large shoulder and leg pads")
+		.attr("data-placement", "bottom")
+		//.attr("style", "top: 110px !important; left: 160px !important;")
+		.text(" ")
+		;
 
-		/*
-		var ann_row = d3.select("div#" + svg_container_id)
-						.append("div")
-							.classed("row", true)
-							.classed("ann_row", true)
-							.attr("style","height: 1px;");
-
-		[1,2,3].forEach(i => Array(i).fill(i).forEach(_ => { //this syntax is kinda gross
-			ann_row.append("div")
-					.attr("class", "xs-col-2")
-					.html("&nbsp;");
-		}))*/
-
-		d3.select("div#" + svg_container_id)
-			.append("div")
-			.classed("annotation1", true)
-			.attr("id", "teamshots_annotation1")
-			.attr("data-original-title", "1974")
-			.attr("data-content", "The first modern 'cage' style goalie masks are introduced, and the last goalie to play without a mask retires")
-			.attr("data-placement", "bottom")
-			//.attr("style", "top: 10px !important; left: 60px !important;")
-			.text(" ")
-			;
-
-		d3.select("div#" + svg_container_id)
-			.append("div")
-			.attr("class","annotation2")
-			.attr("id", "teamshots_annotation2")
-			.attr("data-original-title", "1986")
-			.attr("data-content", "Patrick Roy popularizes 'butterfly'-style goaltending, winning the Stanley Cup as a rookie. It remains the dominant style today. Goalies also start wearing grotesquely-large shoulder and leg pads")
-			.attr("data-placement", "bottom")
-			//.attr("style", "top: 110px !important; left: 160px !important;")
-			.text(" ")
-			;
-
-		d3.select("div#" + svg_container_id)
-			.append("div")
-			.attr("class","annotation3")
-			.attr("id", "teamshots_annotation3")
-			.attr("data-original-title", "2006")
-			.attr("data-content", "During the lockout year, the NHL develops new rules to increase scoring. These include restrictions on maximum goalie pad size, legalization of the 'two-line pass', and a prohibition on goalies playing the puck in the corners of the rink")
-			.attr("data-placement", "top")
-			//.attr("style", "top: 210px !important; left: 260px !important;")
-			.text(" ")
-			;
-	//}
+	d3.select("div#" + svg_container_id)
+		.append("div")
+		.attr("class","annotation3")
+		.attr("id", "teamshots_annotation3")
+		.attr("data-original-title", "2006")
+		.attr("data-content", "During the lockout year, the NHL develops new rules to increase scoring. These include restrictions on maximum goalie pad size, legalization of the 'two-line pass', and a prohibition on goalies playing the puck in the corners of the rink")
+		.attr("data-placement", "top")
+		//.attr("style", "top: 210px !important; left: 260px !important;")
+		.text(" ")
+		;
 }
 
 function update(data, svg_container_id, width, height)
