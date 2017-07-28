@@ -58,7 +58,8 @@ function build() {
 		//create SVG elements
 		var svg = container.append("svg")
 					.attr("width", this.width + common.margin.left + common.margin.right)
-					.attr("height", this.height + common.margin.top + common.margin.bottom);
+					.attr("height", this.height + common.margin.top + common.margin.bottom)
+					.classed("home", true);
 
 		/* Burn down through D3 to get the underlying JS impl of DOM nodes
 		if (!check_panel.empty()) {
@@ -101,7 +102,7 @@ function build() {
 		}
 
 		//checkboxes for positions displayed (in #playershots_positionpanel)
-		var check_panel = d3.select("div#playershots_positionpanel");
+		var check_panel = d3.select("div#" + panel_checks);
 		if (!check_panel.empty()) {
 			check_panel._groups[0][0].parentNode.classList.remove("invisible");
 		}
@@ -129,8 +130,7 @@ function update() {
 
 	var data = [];
 	//decide which stat to plot
-	var selected_radio = d3.select("div#" + panel_radio)
-							.selectAll("input")
+	var selected_radio = d3.select("div#" + panel_radio + " input")
 							.filter(function() { return this.checked == true })
 							._groups[0][0];
 
@@ -209,6 +209,17 @@ function update() {
 		   .attr("cy", function(d) { return yScale(d[stat_to_plot]); })
 		   .attr("fill", common.colors.success)
 		   .attr("r","5");
+
+	common.linechart_mouseover(svg_container_id,function(d) {
+	   return "<div>" +
+				   "<div class='m-col-7'><strong>Age:</strong></div>" +
+				   "<div class='m-col-5'>" + d[age] + "</div>" +
+			   "</div><br/>" +
+			   "<div>" +
+				   "<div class='m-col-7'><strong>Value:</strong></div>" +
+				   "<div class='m-col-5'>" + parseFloat(d[stat_to_plot]).toFixed(2) + "</div>" +
+			   "</div>"
+	});
 }
 
 function plottable_by_age(data, column_name) {

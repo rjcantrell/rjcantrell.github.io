@@ -194,10 +194,19 @@ function update(data, svg_container_id, width, height)
 		   .attr("fill", avgcolor)
 		   .attr("r","5");
 
+	common.linechart_mouseover("teamshots",function(d) {
+		return "<div>" +
+					"<div class='m-col-7'><strong>Year:</strong></div>" +
+					"<div class='m-col-5'>" + d[year] + "</div>" +
+				"</div><br/>" +
+				"<div>" +
+					"<div class='m-col-7'><strong>Shot %:</strong></div>" +
+					"<div class='m-col-5'>" + parseFloat(d[value]).toFixed(2) + "</div>" +
+				"</div>"
+	});
 	//tooltips
-	var tooltip = common.tooltip();
-
-	//TODO: trim d[value] to X decimal places
+	//var tooltip = common.tooltip();
+	/*
 	svg.selectAll("circle")
 		.on("mouseover", function(d) {
 			d3.select(this).attr("stroke", "white").attr("stroke-width", 3);
@@ -220,6 +229,7 @@ function update(data, svg_container_id, width, height)
 				.select("." + common.tooltip_class)
 				.style("display","none");
 		});
+	*/
 }
 
 retVal.draw = initialize;

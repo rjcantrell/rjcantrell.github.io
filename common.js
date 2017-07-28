@@ -15,22 +15,35 @@
 	};
 
 	common.tooltip_class = "d3-tip";
-	common.tooltip = function() {
+	common.tooltip = function(id) {
+		id = id || "";
 		return d3.select("body")
 					.append("div")
 					.attr("class", common.tooltip_class)
+					.attr("id", id)
 					.style("display", "none")
 					.style("position", "absolute");
 	};
 
-	common.named_tooltip = function(name) {
-		return d3.select("body")
-					.append("div")
-					.attr("class", common.tooltip_class)
-					.attr("id", name)
-					//.style("display", "none")
-					.style("position", "absolute");
-	};
+	common.linechart_mouseover = function(container_id, produceHtmlFromD) {
+		tip_id = "tip_for_" + container_id;
+		tooltip = common.tooltip(tip_id);
+		d3.selectAll("#" + container_id + " circle")
+			.on("mouseover", function(d) {
+				d3.select(this).attr("stroke", "white").attr("stroke-width", 3);
+				tooltip.html(produceHtmlFromD(d));
+				tooltip.style("display","block");
+				tooltip.style("top", (d3.event.pageY + common.padding) + "px");
+				tooltip.style("left", (d3.event.pageX + common.padding) + "px");
+			})
+			.on("mouseout",function(d) {
+				var oldColor = d3.select(this).attr("fill");
+				d3.select(this).attr("stroke", oldColor).attr("stroke-width", 1);
+				d3.select("body")
+					.select("#" + tip_id)
+					.style("display","none");
+			});
+	}
 
 	common.lineGen = function(xScale, yScale, xKey, yKey) {
 		return d3.line()
