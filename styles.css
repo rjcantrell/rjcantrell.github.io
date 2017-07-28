@@ -108,32 +108,35 @@ div .padded button {
 
 .popover.bottom .arrow {
     border-bottom-color: #888 !important;
+    border-top-color: #888 !important;
+}
+
+.popover.bottom .arrow:after {
+    border-bottom-color: #888 !important;
+}
+
+.popover.top .arrow {
+    border-bottom-color: #888 !important;
+    border-top-color: #888 !important;
 }
 
 .popover.top .arrow:after {
     border-top-color: #888 !important;
 }
-/*
 
-maybe I could have found a better selector to use than this...
 
-#teamshots > div.popover:nth-child(1) {
-    top: -110px !important;
-    left: 20% !important;
+#teamshots_annotation1 + .popover {
+    top: 70% !important;
+    left: -3% !important;
 }
 
-#teamshots > div.popover:nth-child(2) {
-    top: -110px !important;
-    left: 20% !important;
+#teamshots_annotation2 + .popover {
+    top: 70% !important;
+    left: 19% !important;
 }
 
-#teamshots > div.popover:nth-child(3) {
-    top: -110px !important;
-    left: 20% !important;
+#teamshots_annotation3 + .popover {
+    width: 400px;
+    top: 0% !important;
+    left: 53% !important;
 }
-
-#teamshots > .popover:nth-child(4) {
-    top: -110px !important;
-    left: 55% !important;
-}
-*/

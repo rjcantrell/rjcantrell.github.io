@@ -47,36 +47,40 @@ function initialize(svg_container_id, width, height) {
 			ann_row.append("div")
 					.attr("class", "xs-col-2")
 					.html("&nbsp;");
-		}))
+		}))*/
 
-		var ann1 = d3.select("div#" + svg_container_id).append("div")
-							.classed("annotation1", true)
-							.classed("")
-							.attr("id", "teamshots_annotation1")
-							.attr("data-original-title", "1974")
-							.attr("data-content", "The first modern 'cage' style goalie masks are introduced, and the last goalie to play without a mask retires")
-							.attr("data-placement", "bottom")
-							.attr("style", "top: 10px !important; left: 60px !important;")
-							;
+		d3.select("div#" + svg_container_id)
+			.append("div")
+			.classed("annotation1", true)
+			.attr("id", "teamshots_annotation1")
+			.attr("data-original-title", "1974")
+			.attr("data-content", "The first modern 'cage' style goalie masks are introduced, and the last goalie to play without a mask retires")
+			.attr("data-placement", "bottom")
+			//.attr("style", "top: 10px !important; left: 60px !important;")
+			.text(" ")
+			;
 
-		var ann2 = d3.select("div#" + svg_container_id).append("div")
-							.attr("class","annotation2")
-							.attr("id", "teamshots_annotation2")
-							.attr("data-original-title", "1986")
-							.attr("data-content", "Patrick Roy popularizes 'butterfly'-style goaltending, winning the Stanley Cup as a rookie. It remains the dominant style today. Goalies also start wearing grotesquely-large shoulder and leg pads")
-							.attr("data-placement", "top")
-							.attr("style", "top: 110px !important; left: 160px !important;")
-							;
+		d3.select("div#" + svg_container_id)
+			.append("div")
+			.attr("class","annotation2")
+			.attr("id", "teamshots_annotation2")
+			.attr("data-original-title", "1986")
+			.attr("data-content", "Patrick Roy popularizes 'butterfly'-style goaltending, winning the Stanley Cup as a rookie. It remains the dominant style today. Goalies also start wearing grotesquely-large shoulder and leg pads")
+			.attr("data-placement", "bottom")
+			//.attr("style", "top: 110px !important; left: 160px !important;")
+			.text(" ")
+			;
 
-		var ann3 = d3.select("div#" + svg_container_id).append("div")
-							.attr("class","annotation3")
-							.attr("id", "teamshots_annotation3")
-							.attr("data-original-title", "2006")
-							.attr("data-content", "During the lockout year, the NHL develops new rules to increase scoring. These include restrictions on maximum goalie pad size, legalization of the 'two-line pass', and a prohibition on goalies playing the puck in the corners of the rink")
-							.attr("data-placement", "top")
-							.attr("style", "top: 210px !important; left: 260px !important;")
-							;
-		*/
+		d3.select("div#" + svg_container_id)
+			.append("div")
+			.attr("class","annotation3")
+			.attr("id", "teamshots_annotation3")
+			.attr("data-original-title", "2006")
+			.attr("data-content", "During the lockout year, the NHL develops new rules to increase scoring. These include restrictions on maximum goalie pad size, legalization of the 'two-line pass', and a prohibition on goalies playing the puck in the corners of the rink")
+			.attr("data-placement", "top")
+			//.attr("style", "top: 210px !important; left: 260px !important;")
+			.text(" ")
+			;
 	//}
 }
 

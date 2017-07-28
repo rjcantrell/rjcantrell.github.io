@@ -43,13 +43,11 @@
 
             //initialize buttons that can create popovers
             //this works relative to the button if you comment the .popover styling in styles.css
-            $('[data-toggle="popover"]').popover();
+            //$('[data-toggle="popover"]').popover();
 
-            /*
             $("#show_annotation1").on('click', function(e) {
                     $('#teamshots div.annotation1').popover('toggle');
             });
-            $("#show_annotation1").popover();
 
             $("#show_annotation2").on('click', function(e) {
                     $('#teamshots div.annotation2').popover('toggle');
@@ -58,7 +56,6 @@
             $("#show_annotation3").on('click', function(e) {
                     $('#teamshots div.annotation3').popover('toggle');
             });
-            */
 		}, false);
 	  </script>
   </head>
@@ -95,29 +92,20 @@
             <h2>Max, Min, and Mean NHL Shooting Percentage, 1967 - 2017</h2>
 			<div id="teamshots" class="col-xs-9"></div>
 			<div id="teamshots_text" class="col-xs-3">
-				<p>Goalies are notably absent from shooting data, for obvious reasons, so let's give a little attention to the psycopaths on the other end of these 100-mph projectiles:</p>
+                <br/>
+                <br/>
+				<p>Goalies are notably absent from shooting data, for obvious reasons, so let's give a little attention to the psychopaths on the other end of these 100-mph projectiles:</p>
 				<div class="row padded">
-					<!-- <button id="show_annotation1" class="btn btn-primary">In 1974...</button> -->
-                    <!--
-                    var ann1 = d3.select("div#" + svg_container_id).append("div")
-                                        .classed("annotation1", true)
-                                        .classed("")
-                                        .attr("id", "teamshots_annotation1")
-                                        .attr("data-original-title", "1974")
-                                        .attr("data-content", "The first modern 'cage' style goalie masks are introduced, and the last goalie to play without a mask retires")
-                                        .attr("data-placement", "bottom")
-                                        .attr("style", "top: 10px !important; left: 60px !important;")
-                                        ;
-                    -->
-                    <button class="btn btn-primary popper" data-toggle="popover" title="1974" data-content="The first modern 'cage' style goalie masks are introduced, and the last goalie to play without a mask retires" data-placement="left">In 1974...</button>
+					<button id="show_annotation1" class="btn btn-primary">In 1974...</button>
+                    <!-- <button class="btn btn-primary popper" data-toggle="popover" title="1974" data-content="The first modern 'cage' style goalie masks are introduced, and the last goalie to play without a mask retires" data-placement="left">In 1974...</button> -->
 				</div>
 				<div class="row padded">
-					<!--<button id="show_annotation2" class="btn btn-primary">In 1986...</button>-->
-                    <button class="btn btn-primary popper" data-toggle="popover" title="1986" data-content="Patrick Roy popularizes 'butterfly'-style goaltending, winning the Stanley Cup as a rookie. It remains the dominant style today. Goalies also start wearing grotesquely-large shoulder and leg pads" data-placement="left">In 1986...</button>
+					<button id="show_annotation2" class="btn btn-primary">In 1986...</button>
+                    <!-- <button class="btn btn-primary popper" data-toggle="popover" title="1986" data-content="Patrick Roy popularizes 'butterfly'-style goaltending, winning the Stanley Cup as a rookie. It remains the dominant style today. Goalies also start wearing grotesquely-large shoulder and leg pads" data-placement="left">In 1986...</button> -->
 				</div>
 				<div class="row padded">
-					<!--<button id="show_annotation3" class="btn btn-primary">In 2006...</button>-->
-                    <button id="show_annotation3" class="btn btn-primary popper" data-toggle="popover" title="2006" data-content="During the lockout year, the NHL develops new rules to increase scoring. These include restrictions on maximum goalie pad size, legalization of the 'two-line pass', and a prohibition on goalies playing the puck in the corners of the rink" data-placement="left">In 2006...</button>
+					<button id="show_annotation3" class="btn btn-primary">In 2006...</button>
+                    <!-- <button id="show_annotation3" class="btn btn-primary popper" data-toggle="popover" title="2006" data-content="During the lockout year, the NHL develops new rules to increase scoring. These include restrictions on maximum goalie pad size, legalization of the 'two-line pass', and a prohibition on goalies playing the puck in the corners of the rink" data-placement="left">In 2006...</button> -->
 				</div>
 			</div>
 		</div>
