@@ -11,20 +11,11 @@ var record_count = "record_count";
 var panel_radio = "playershots_statpanel";
 var panel_checks = "playershots_positionpanel";
 
-var group_axes = "axes";
-
 var stats = {
 	"avg_shotpct": "Shot Percentage",
 	"avg_plus_minus": "Plus/Minus",
 	"avg_goals": "Goals",
 	"avg_shot": "Shots Taken"
-};
-
-var positions = {
-	"lw": "Left Wing",
-	"rw": "Right Wing",
-	"c": "Center",
-	"d": "Defender"
 };
 
 var skater_data = {
@@ -38,8 +29,8 @@ function initialize(svg_container_id, width, height) {
 	d3.csv("/skater_stats_summary.csv", function (error, data) {
 		if (error) { throw error; }
 
-		for (var p in positions) {
-			skater_data[p] = data.filter(function(row) { return row[pos] == positions[p] });
+		for (var p in common.positions) {
+			skater_data[p] = data.filter(function(row) { return row[pos] == common.positions[p] });
 		}
 
 		this.svg_container_id = svg_container_id;
@@ -107,7 +98,7 @@ function build() {
 			check_panel._groups[0][0].parentNode.classList.remove("invisible");
 		}
 
-		for (var p in positions) {
+		for (var p in common.positions) {
 			var check_row = check_panel.append("div")
 				.attr("class", "row");
 
@@ -121,16 +112,15 @@ function build() {
 
 			check_row.append("label")
 						.attr("for", p)
-						.text(positions[p]);
+						.text(common.positions[p]);
 		}
 }
 
 //doesn't need parameters since it can ask the checkboxes which data to show
 function update() {
-
 	var data = [];
 	//decide which stat to plot
-	var selected_radio = d3.select("div#" + panel_radio + " input")
+	var selected_radio = d3.selectAll("div#" + panel_radio + " input")
 							.filter(function() { return this.checked == true })
 							._groups[0][0];
 
@@ -159,29 +149,13 @@ function update() {
 						  d3.max(data, function(d) { return +d[stat_to_plot]; })])
 				 .range([this.height, common.margin.top]);//SVG coords are backwards
 
-	//draw and label axes
-	var xAxis = d3.axisBottom(xScale).tickFormat(d3.format(".0f"));
-	var yAxis = d3.axisLeft(yScale);
-
-	//TODO: probably better to use the general update pattern here...
-	var svg = d3.select("div#" + this.svg_container_id)
-					.select("svg");
+	var svg = d3.select("div#" + this.svg_container_id + " svg");
 
 	//but, let's remove and re-add because there's a deadline
-	svg.select("g#" + group_axes).remove();
-	var axes = svg.append("g").attr("id", group_axes);
-
-	//show X axis
-	var xAxisGroup = axes.append("g").attr("id", "x-axis");
-	var boundCustomXAxis = common.customXAxis.bind(null, xAxisGroup, xAxis);
-	xAxisGroup.attr("transform", "translate(0," + height + ")")
-    			.call(boundCustomXAxis);
-
-	//show Y axis
-	var yAxisGroup = axes.append("g").attr("id","y-axis");
-	var boundCustomYAxis = common.customYAxis.bind(null, yAxisGroup, yAxis, width);
-	yAxisGroup.attr("transform", "translate(" + common.margin.left + ",0)")
-				.call(boundCustomYAxis);
+	svg.select("g." + common.group_axes).remove();
+	var axes = svg.append("g").attr("class", "axes");
+	common.xBottom(axes, xScale, "translate(0," + height + ")");
+	common.yLeft(axes, yScale,  "translate(" + common.margin.left + ",0)", width);
 
 	//line-maker function
 	var lineGen = common.lineGen.bind(this, xScale, yScale, age, stat_to_plot)();
@@ -189,17 +163,17 @@ function update() {
 	svg.selectAll("path").remove();
 
 	//dataset line
-	svg.append("svg:path")
+	svg.append("g").classed("line", true).append("svg:path")
 		   .attr("d", lineGen(data))
 		   .attr("stroke", common.colors.success)
 		   .attr("stroke-width", 2)
 		   .attr("fill", "none");
 
 	//NICE-TO-HAVE: can we animate this instead of removing and re-adding?
-	svg.selectAll("circle").remove();
+	svg.selectAll("g.points").remove();
 
 	//dataset points
-	svg.selectAll("." + stat_to_plot)
+	svg.append("g").classed("points", true).selectAll("." + stat_to_plot)
 		   .data(data)
 		   .enter()
 		   .append("circle")

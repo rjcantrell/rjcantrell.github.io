@@ -24,13 +24,14 @@
 		document.addEventListener('DOMContentLoaded', function() {
 			$('#fullpage').fullpage({
 				keyboardScrolling: true,
-                anchors: ['intro','slide1','slide2','slide3'],
+                anchors: ['intro','teamshots','scorers','playershots'],
 				navigation: true,
 				navigationPosition: 'right',
-				navigationTooltips: ['Introduction',
-									 'Scoring By Team Per Year',
-									 'Scoring By Position By Age',
-									 'Top Scoring-Percentage Players']
+				navigationTooltips: ['Introduction'
+                                    ,'Scoring By Team Per Year'
+                                    ,'Top Scoring-Percentage Players'
+                                    ,'Scoring By Position By Age'
+									]
 			});
 
             var chart_width = $(window).width() * .7;
@@ -61,26 +62,13 @@
 	  </script>
   </head>
   <body>
+    <!-- the entire content of the page is set into a fullPage.js container to be scrolled -->
 	<div id="fullpage" class="container" data-anchors="intro">
+        <!-- begin intro -->
 		<div class="section">
 			<div id="title" class="page-header">
 				<h1 align="center">He shoots... HE SCORES!</h1>
 				<h5 align="center">An exploration of scoring in the NHL, 1967-2017</h5>
-
-				<p class="text-info">
-					<ul>
-						<b>//TODO:</b>
-						<li>change axes color and axes labeling color to white</li>
-                        <li>add tooltip support to second chart</li>
-						<li>Recreate third chart</li>
-						<li>Add annotations to first chart</li>
-						<li>label axes</li>
-						<li>write better essay</li>
-						<li>animated transitions for second chart</li>
-                        <li>add navbar to show which slide you're on</li>
-						<li>return D3 reference to point at minified file on CDN, not dev version</li>
-					</ul>
-				</p>
 
 				<p>My visualization is designed as a martini-glass. The user is led through several non-interactive scenes, before being left at an interactive visualization that allows them to chop away at the underlying data a bit. As in my midterm, we're chasing that age-old elusive question: What does it take to score? In the National Hockey League, I mean. The first scene sets a scene for general scoring ability across the league over time. The second diverts into the scorers themselves, and finally the third looks at it from the perspective of age and position. In this final visualization, several controls are displayed so that the user can choose for themselves what to plot, and for whom to plot it.
 
@@ -100,7 +88,10 @@
 				</a>
 			</div>
 		</div>
-		<div class="section" data-anchors="slide1">
+        <!-- end intro -->
+
+        <!-- begin first chart: Scoring, by Team, by Year -->
+		<div class="section" data-anchors="teamshots">
             <h2>Max, Min, and Mean NHL Shooting Percentage, 1967 - 2017</h2>
 			<div id="teamshots" class="col-xs-9"></div>
 			<div id="teamshots_text" class="col-xs-3">
@@ -130,7 +121,38 @@
 				</div>
 			</div>
 		</div>
-		<div class="section" data-anchors="slide2">
+        <!-- end first chart: Scoring, by Team, by Year -->
+
+        <!-- begin second chart: Top Scoring Percentage -->
+        <div class="section" data-anchors="scorers">
+            <h2 class="no_bottom_margin">Best Single-Season Shooting % (min 5 shots)</h2>
+            <small>Asterisk indicates a Hall of Fame member</small>
+            <br/>
+            <br/>
+            <br/>
+            <div class="row">
+                <div id="scorers_axis" class="col-xs-9"></div>
+                <div id="scorers_text" class="col-xs-3">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div id="scorers" class="col-xs-9"></div>
+                <div id="scorers_text" class="col-xs-3">
+                    <div class="row">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Legend</h3>
+                            </div>
+                            <div class="panel-body" id="scorers_legend">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end second chart: Top Scoring Percentage -->
+
+        <!-- begin third chart: Several scoring stats by Age, for position -->
+		<div class="section" data-anchors="playershots">
             <h2>NHL Scoring Stats, By Player Age and Position</h2>
 			<div id="playershots" class="col-xs-9"></div>
 			<div id="playershots_text" class="col-xs-3">
@@ -154,11 +176,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="section" data-anchors="slide3">
-            <h2>Best Single-Season Shooters (min 5 shots)</h2>
-			<div id="scorers" class="col-xs-9"></div>
-            <div id="scorers_text" class="col-xs-3"></div>
-		</div>
+        <!-- begin third chart: Several scoring stats by Age, for position -->
+
 	</div>
   </body>
 </html>

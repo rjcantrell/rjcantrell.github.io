@@ -1,6 +1,11 @@
+/* lighter color for fullPage navigation pips */
+#fp-nav ul li a span {
+    background: whitesmoke;
+}
+
 /* scrollable SVG containers if needed*/
 div.scrollable {
-  overflow: scroll;
+  overflow-x: hidden;
 }
 
 /* D3 tooltip styling */

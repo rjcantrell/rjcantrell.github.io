@@ -22,13 +22,13 @@ function initialize(svg_container_id, width, height) {
 	});
 
 	//forget it all. I'm just going to put this on the button that drives it, instead
-	//of figuring out how to float it over the top in a way that is reproducible and
-	//not seemingly random (and prey to the fact that nth-child doesn't work if popover
+	//of figuring out how to float bootstrap divs over the svg in a way that is reproducible
+	//and not seemingly random (and prey to the fact that nth-child doesn't work if popover
 	//literally removes it from the DOM)
 
 	//beyond here are only ghosts...
 
-	//this happens first, because update() is async and will likely finish later.
+	//if not in a func, this happens first, because update() is async and will likely finish later.
 	//Should it be here? You'd have better control over where to stick these things
 	//in terms of (x,y) than just making a parent-child relationship to the empty
 	//box.
@@ -108,58 +108,44 @@ function update(data, svg_container_id, width, height)
 					.attr("height", height + common.margin.top + common.margin.bottom)
 					.classed("home", true);
 
-	//draw axes
-	var xAxis = d3.axisBottom(xScale).tickFormat(d3.format(".0f"));
-	var yAxis = d3.axisLeft(yScale);
-
 	//label axes
 	svg.append("text")
-		.attr("class", "y label")
+		.attr("class", "y-label")
 	    .attr("text-anchor", "end")
 		.attr("fill", common.colors.major_axes)
-	    .attr("y", 10)
-		.attr("x", (height / 2) * -1)
+	    .attr("y", 0)
+		.attr("x", height / 4 * -1 )
 	    .attr("dy", ".75em")
 	    .attr("transform", "rotate(-90)")
 	    .text("Shot Percentage: Goals / Shots Attempted");
 
-	axes = svg.append("g").attr("class", "axes");
-
-	//show X axis
-	var xAxisGroup = axes.append("g").attr("class", "x-axis");
-	var boundCustomXAxis = common.customXAxis.bind(null, xAxisGroup, xAxis);
-	xAxisGroup.attr("transform", "translate(0," + height + ")")
-    			.call(boundCustomXAxis);
-
-	//show Y axis
-	var yAxisGroup = axes.append("g").attr("class","y-axis");
-	var boundCustomYAxis = common.customYAxis.bind(null, yAxisGroup, yAxis, width);
-	yAxisGroup.attr("transform", "translate(" + common.margin.left + ",0)")
-				.call(boundCustomYAxis);
+	var axes = svg.append("g").attr("class", common.group_axes);
+	common.xBottom(axes, xScale, "translate(0," + height + ")");
+	common.yLeft(axes, yScale,  "translate(" + common.margin.left + ",0)", width);
 
 	//max line
-	svg.append("svg:path")
+	svg.append("g").classed("max_line", true).append("svg:path")
 		   .attr("d", lineGen(maxes))
 		   .attr("stroke", maxcolor)
 		   .attr("stroke-width", 2)
 		   .attr("fill", "none");
 
 	//min line
-	svg.append("svg:path")
+	svg.append("g").classed("min_line", true).append("svg:path")
 		   .attr("d", lineGen(mins))
 		   .attr("stroke", mincolor)
 		   .attr("stroke-width", 2)
 		   .attr("fill", "none");
 
 	//avg line
-	svg.append("svg:path")
+	svg.append("g").classed("avg_line", true).append("svg:path")
 		   .attr("d", lineGen(avgs))
 		   .attr("stroke", avgcolor)
 		   .attr("stroke-width", 2)
 		   .attr("fill", "none");
 
 	//max datapoints
-	svg.selectAll("." + max)
+	svg.append("g").classed("maxes", true).selectAll("." + max)
 		   .data(maxes)
 		   .enter()
 		   .append("circle")
@@ -171,7 +157,7 @@ function update(data, svg_container_id, width, height)
 		   .attr("r","5");
 
 	//min datapoints
-	svg.selectAll("." + min)
+	svg.append("g").classed("mins", true).selectAll("." + min)
 		   .data(mins)
 		   .enter()
 		   .append("circle")
@@ -183,7 +169,7 @@ function update(data, svg_container_id, width, height)
 		   .attr("r","5");
 
 	//avg datapoints
-	svg.selectAll("." + avg)
+	svg.append("g").classed("avgs", true).selectAll("." + avg)
 		   .data(avgs)
 		   .enter()
 		   .append("circle")
@@ -204,32 +190,6 @@ function update(data, svg_container_id, width, height)
 					"<div class='m-col-5'>" + parseFloat(d[value]).toFixed(2) + "</div>" +
 				"</div>"
 	});
-	//tooltips
-	//var tooltip = common.tooltip();
-	/*
-	svg.selectAll("circle")
-		.on("mouseover", function(d) {
-			d3.select(this).attr("stroke", "white").attr("stroke-width", 3);
-			tooltip.html("<div>" +
-						    "<div class='m-col-7'><strong>Year:</strong></div>" +
-							"<div class='m-col-5'>" + d[year] + "</div>" +
-						 "</div><br/>" +
-						 "<div>" +
-						    "<div class='m-col-7'><strong>Shot %:</strong></div>" +
-							"<div class='m-col-5'>" + parseFloat(d[value]).toFixed(2) + "</div>" +
-						 "</div>");
-			tooltip.style("display","block");
-			tooltip.style("top", (d3.event.pageY + common.padding) + "px");
-			tooltip.style("left", (d3.event.pageX + common.padding) + "px");
-		})
-		.on("mouseout",function(d) {
-			var oldColor = d3.select(this).attr("fill");
-			d3.select(this).attr("stroke", oldColor).attr("stroke-width", 1);
-			d3.select("body")
-				.select("." + common.tooltip_class)
-				.style("display","none");
-		});
-	*/
 }
 
 retVal.draw = initialize;

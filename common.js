@@ -6,7 +6,9 @@
 
 	common.colors =
 	{
-		danger: "#e74c3c",		//from Bootstrap-Darkly.
+		primary: "#375a7f",
+		info: 	 "#3498db",
+		danger:  "#e74c3c",		//from Bootstrap-Darkly.
 		warning: "#f39c12",		//I wish SVGs could consume existing HTML-CSS
 		success: "#00bc8c",		//do they turn their nose down at the plebian "color:"?
 
@@ -14,7 +16,15 @@
 		minor_axes: "#555",
 	};
 
+	common.positions = {
+		"lw": "Left Wing",
+		"rw": "Right Wing",
+		"c": "Center",
+		"d": "Defender"
+	};
+
 	common.tooltip_class = "d3-tip";
+	common.group_axes = "axes";
 	common.tooltip = function(id) {
 		id = id || "";
 		return d3.select("body")
@@ -77,6 +87,45 @@
 			.attr("stroke", common.colors.minor_axes)
 			.attr("stroke-dasharray", "2,2")
 			.attr("x2", width - common.margin.left - common.margin.right - common.padding * 2);
+	};
+
+	common.xBottom = function(container, xScale, transform) {
+		var xAxis = d3.axisBottom(xScale).tickFormat(d3.format(".0f"));
+
+		//show x axis
+		var xAxisGroup = container.append("g").classed("x-axis", true);
+		xAxisGroup.call(xAxis);
+		xAxisGroup.selectAll(".domain")
+			.attr("stroke", common.colors.major_axes);
+
+		xAxisGroup.selectAll(".tick text")
+			.attr("class","axes")
+			.attr("stroke", common.colors.major_axes);
+
+		xAxisGroup.selectAll(".tick line")
+			.attr("stroke", common.colors.minor_axes);
+
+		xAxisGroup.attr("transform", transform);
+	}
+
+	common.yLeft = function(container, yScale, transform, width) {
+		var yAxis = d3.axisLeft(yScale);
+
+		//show Y axis
+		var yAxisGroup = container.append("g").classed("y-axis", true);
+		yAxisGroup.call(yAxis);
+		yAxisGroup.selectAll(".domain")
+			.attr("stroke", common.colors.major_axes);
+
+		yAxisGroup.selectAll(".tick text")
+			.attr("class","axes")
+			.attr("stroke", common.colors.major_axes);
+
+		yAxisGroup.selectAll(".tick line")
+			.attr("stroke", common.colors.minor_axes)
+			.attr("stroke-dasharray", "2,2")
+			.attr("x2", width - common.margin.left - common.margin.right - common.padding * 2);
+		yAxisGroup.attr("transform", transform);
 	};
 
 	this.common = common;
