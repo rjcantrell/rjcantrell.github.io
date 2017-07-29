@@ -30,7 +30,7 @@ function initialize(svg_container_id, width, height) {
 function update(data, svg_container_id, width, height) {
     var axis_container = d3.select("div#" + svg_container_id + "_axis")
                                 .append("svg")
-                                .attr("width", width - 100)
+                                .attr("width", width)
                                 .attr("height", 25);
 
     //create SVG elements

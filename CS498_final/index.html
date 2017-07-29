@@ -68,14 +68,14 @@
 				<h1 align="center">He shoots... HE SCORES!</h1>
 				<h5 align="center">An exploration of scoring in the NHL, 1967-2017</h5>
                 <br/>
-                
+
 				<p>My visualization is designed as a martini-glass. The user is led on a single path through several non-interactive scenes, before being left at an interactive scene that allows them to chop away at the underlying data a bit. It even makes a half-hearted effort at responsive design by sizing all the charts based on the window size at the time of page-load. As in my midterm, we're chasing that age-old elusive question: What does it take to score? In the National Hockey League, I mean. The first scene sets a scene for general scoring ability across the league over time. The second diverts into the scorers themselves, and finally the third looks at it from the perspective of age and position. In this final scene, several controls are displayed so that the user can choose for themselves what to plot, and for whom to plot it.
 
                 <p>Each scene within my narrative viz has the structure of an 'annotated chart', as discussed in the lectures. Because each scroll of the page completely transitions between scenes in a single linear order, you could argue that overall, the viz functions as a slide show. The initial state of each scene plots the same stat (shot-percentage), to provide continuity and help the user keep their bearings in between each.
 
-				<p>Data can be highlighted in several ways in this visualization. All charts display tooltips when hovering over data elements upon with the mouse. The first has additional Bootstrap annotations for selected years. These are positioned in CSS as percentages of the graph container, and so aren't guaranteed to look good for all resolutions. You can't style them dynamically because they do not exist until the button showing them has been pressed.
+				<p>Data can be highlighted in several ways in this visualization. All charts display tooltips when hovering over data elements upon with the mouse. The first has additional Bootstrap annotations for selected years. Mouseover tooltips are cleared when the mouse exits the data element, and annotations are cleared when clicking the button that created them.
 
-				<p>The third scene shows the best use of triggers and parameters. Parameters for the viz include which stat is being plotted, and which position or positions are included. The statistic to be plotted is indicated by a radio-button alongside the viz, and the positions being plotted are indicated by checkboxes alongside the viz. Interaction with these radio buttons and checkboxes are triggers for the parameters to change, which in turn causes the viz to change state. Interactive controls are highlighted to the user with bright colors and bold font.
+				<p>The final scene shows the best use of triggers and parameters. Parameters for the scene include which stat is being plotted, and which positions are included. The stat to be plotted is indicated by a radio-button alongside the viz, and the positions being plotted are indicated by checkboxes alongside the viz. Interaction with these radio buttons and checkboxes are triggers for the parameters to change, which in turn causes the viz to change state. Interactive controls are highlighted to the user with bright colors and bold font.
 				</p>
 
                 <!-- "scroll down" indicator (also scrolls page when clicked) -->
@@ -176,7 +176,7 @@
 
                             <li><a href="https://alvarotrigo.com/">Álvaro Trigo</a>, developer of <a href="https://alvarotrigo.com/fullPage/">fullPage</a></li>
 
-                            <li><a href="https://www.linkedin.com/in/jeresig/">John Resig</a>, and the <a href="https://jquery.org/team/">rest of the developers</a> of <a href="https://jquery.com/">jQuery</a>. I don't use it, but fullPage does</li>
+                            <li><a href="https://www.linkedin.com/in/jeresig/">John Resig</a>, and the <a href="https://jquery.org/team/">rest of the developers</a> of <a href="https://jquery.com/">jQuery</a></li>
 
                             <li><a href="https://bost.ocks.org/mike/">Mike Bostock</a>, and the <a href="https://github.com/d3/d3/graphs/contributors">rest of the contributors</a> to the <a href="https://d3js.org/">D3 project</a></li>
 
