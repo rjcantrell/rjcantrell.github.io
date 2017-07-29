@@ -40,7 +40,7 @@ function initialize(svg_container_id, width, height) {
 
 	d3.select("div#" + svg_container_id)
 		.append("div")
-		.attr("class","annotation2")
+		.classed("annotation2", true)
 		.attr("id", "teamshots_annotation2")
 		.attr("data-original-title", "1986")
 		.attr("data-content", "Patrick Roy popularizes 'butterfly'-style goaltending, winning the Stanley Cup as a rookie. It remains the dominant style today. Goalies also start wearing grotesquely-large shoulder and leg pads")
@@ -51,7 +51,7 @@ function initialize(svg_container_id, width, height) {
 
 	d3.select("div#" + svg_container_id)
 		.append("div")
-		.attr("class","annotation3")
+		.classed("annotation3", true)
 		.attr("id", "teamshots_annotation3")
 		.attr("data-original-title", "2006")
 		.attr("data-content", "During the lockout year, the NHL develops new rules to increase scoring. These include restrictions on maximum goalie pad size, legalization of the 'two-line pass', and a prohibition on goalies playing the puck in the corners of the rink")
@@ -91,7 +91,7 @@ function update(data, svg_container_id, width, height)
 
 	//label axes
 	svg.append("text")
-		.attr("class", "y-label")
+		.classed("y-label", true)
 	    .attr("text-anchor", "end")
 		.attr("fill", common.colors.major_axes)
 	    .attr("y", 0)
@@ -100,7 +100,7 @@ function update(data, svg_container_id, width, height)
 	    .attr("transform", "rotate(-90)")
 	    .text("Shot Percentage: Goals / Shots Attempted");
 
-	var axes = svg.append("g").attr("class", common.group_axes);
+	var axes = svg.append("g").classed(common.group_axes, true);
 	common.xBottom(axes, xScale, "translate(0," + height + ")");
 	common.yLeft(axes, yScale,  "translate(" + common.margin.left + ",0)", width);
 
@@ -131,7 +131,7 @@ function update(data, svg_container_id, width, height)
 		   .enter()
 		   .append("circle")
 		   .merge(svg)
-		   .attr("class", max)
+		   .classed(max, true)
 		   .attr("cx", function(d) { return xScale(d[year]); })
 		   .attr("cy", function(d) { return yScale(d[value]); })
 		   .attr("fill", maxcolor)
@@ -143,7 +143,7 @@ function update(data, svg_container_id, width, height)
 		   .enter()
 		   .append("circle")
 		   .merge(svg)
-		   .attr("class", min)
+		   .classed(min, true)
 		   .attr("cx", function(d) { return xScale(d[year]); })
 		   .attr("cy", function(d) { return yScale(d[value]); })
 		   .attr("fill", mincolor)
@@ -155,7 +155,7 @@ function update(data, svg_container_id, width, height)
 		   .enter()
 		   .append("circle")
 		   .merge(svg)
-		   .attr("class", avg)
+		   .classed(avg, true)
 		   .attr("cx", function(d) { return xScale(d[year]); })
 		   .attr("cy", function(d) { return yScale(d[value]); })
 		   .attr("fill", avgcolor)

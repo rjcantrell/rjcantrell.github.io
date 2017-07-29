@@ -16,13 +16,14 @@ div.scrollable {
 /* image for the acknowledgements screen to try to class up the place */
 div.phil-kessel {
     height: 500px;
-    background-image: url('phil-kessel-stanley-cup.jpg');
+    background: url('phil-kessel-stanley-cup.jpg') no-repeat left center;
     background-size: 100%;
     background-repeat: no-repeat;
 }
 
 /* D3 tooltip styling */
 .d3-tip {
+  font-size: medium;
   line-height: 1;
   font-weight: bold;
   padding: 12px;
@@ -34,7 +35,7 @@ div.phil-kessel {
 
 .d3-tip div {
   min-width: 75px;
-  display: inline-block;
+  /* display: inline-block; */
 }
 
 div .padded {
@@ -102,6 +103,9 @@ div .padded button {
 }
 
 /* annotations template modifications */
+/* I'm not sure if ALLLL these !importants are necessary,
+   but I want to make sure Bootstrap's CSS is overridden. */
+
 .popover {
     background-color: #888;
 }
@@ -130,7 +134,7 @@ div .padded button {
 }
 
 #teamshots_annotation2 + .popover {
-    top: 70% !important;
+    top: 60% !important;
     left: 19% !important;
 }
 

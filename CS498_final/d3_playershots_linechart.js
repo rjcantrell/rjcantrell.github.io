@@ -8,6 +8,7 @@ var age = "age";
 var pos = "position";
 var record_count = "record_count";
 
+//HTML div IDs in which we want to add data-driven controls
 var panel_radio = "playershots_statpanel";
 var panel_checks = "playershots_positionpanel";
 
@@ -24,6 +25,9 @@ var skater_data = {
 	c: 	[],
 	d:  [],
 };
+
+//how long should all transitions on the page take?
+var transTime = d3.transition().duration(750);
 
 function initialize(svg_container_id, width, height) {
 	d3.csv("skater_stats_summary.csv", function (error, data) {
@@ -43,77 +47,77 @@ function initialize(svg_container_id, width, height) {
 }
 
 function build() {
-		var common = this.common;
-		var container = d3.select("div#" + this.svg_container_id);
+	var common = this.common;
+	var container = d3.select("div#" + this.svg_container_id);
 
-		//create SVG elements
-		var svg = container.append("svg")
-					.attr("width", this.width + common.margin.left + common.margin.right)
-					.attr("height", this.height + common.margin.top + common.margin.bottom)
-					.classed("home", true);
+	//create SVG elements
+	var svg = container.append("svg")
+				.attr("width", this.width + common.margin.left + common.margin.right)
+				.attr("height", this.height + common.margin.top + common.margin.bottom)
+				.classed("home", true);
 
-		/* Burn down through D3 to get the underlying JS impl of DOM nodes
-		if (!check_panel.empty()) {
-		check_panel				//the d3 selection we just made
-		._groups[0]				//has a member representing the selected things. Take the first
-		[0]						//at this point, it's a regular ol' JS {Object}.
-		.parentNode				//traverse the DOM one upward
-		.classList				//preferred way as of es6, I think?
-		.remove("invisible");	//FINALLY.*/
+	/* Burn down through D3 to get the underlying JS impl of DOM nodes
+	if (!check_panel.empty()) {
+	check_panel				//the d3 selection we just made
+	._groups[0]				//has a member representing the selected things. Take the first
+	[0]						//at this point, it's a regular ol' JS {Object}.
+	.parentNode				//traverse the DOM one upward
+	.classList				//preferred way as of es6, I think?
+	.remove("invisible");	//FINALLY.*/
 
-		//radio buttons for available stats
-		var radio_panel = d3.select("div#" + panel_radio)
-		if (!radio_panel.empty()) {
-			radio_panel._groups[0][0].parentNode.classList.remove("invisible");
-		}
+	//radio buttons for available stats
+	var radio_panel = d3.select("div#" + panel_radio)
+	if (!radio_panel.empty()) {
+		radio_panel._groups[0][0].parentNode.classList.remove("invisible");
+	}
 
-		var have_checked_one = false;
-		for (var s in stats) {
-			var radio_row = radio_panel.append("div")
-				.attr("class", "row");
+	var have_checked_one = false;
+	for (var s in stats) {
+		var radio_row = radio_panel.append("div")
+			.classed("row", true);
 
-			radio_row.append("input")
-					.attr("type", "radio")
-					.attr("class", "padded")
-					.attr("style", "margin-left: 15px")
-					.attr("name", "stats_group")
-					.attr("id", s)
-					.property("checked", function() {
-						if (!have_checked_one) {
-							have_checked_one = true;
-							return true;
-						}
-						return false;
-					})
-					.on("change", function() { update(); });
+		radio_row.append("input")
+				.attr("type", "radio")
+				.classed("padded", true)
+				.attr("style", "margin-left: 15px")
+				.attr("name", "stats_group")
+				.attr("id", s)
+				.property("checked", function() {
+					if (!have_checked_one) {
+						have_checked_one = true;
+						return true;
+					}
+					return false;
+				})
+				.on("change", function() { update(); });
 
-			radio_row.append("label")
-						.attr("for", s)
-						.text(stats[s]);
-		}
+		radio_row.append("label")
+					.attr("for", s)
+					.text(stats[s]);
+	}
 
-		//checkboxes for positions displayed (in #playershots_positionpanel)
-		var check_panel = d3.select("div#" + panel_checks);
-		if (!check_panel.empty()) {
-			check_panel._groups[0][0].parentNode.classList.remove("invisible");
-		}
+	//checkboxes for positions displayed (in #playershots_positionpanel)
+	var check_panel = d3.select("div#" + panel_checks);
+	if (!check_panel.empty()) {
+		check_panel._groups[0][0].parentNode.classList.remove("invisible");
+	}
 
-		for (var p in common.positions) {
-			var check_row = check_panel.append("div")
-				.attr("class", "row");
+	for (var p in common.positions) {
+		var check_row = check_panel.append("div")
+			.classed("row", true);
 
-			check_row.append("input")
-						.attr("type", "checkbox")
-						.attr("class", "padded")
-						.attr("style", "margin-left: 15px") //Should this be in CSS? Am I a bad person?
-						.attr("checked", true)
-						.attr("id", p)
-						.on("change", function() { update(); } );
+		check_row.append("input")
+					.attr("type", "checkbox")
+					.classed("padded", true)
+					.attr("style", "margin-left: 15px") //Should this be in CSS? Am I a bad person?
+					.attr("checked", true)
+					.attr("id", p)
+					.on("change", function() { update(); } );
 
-			check_row.append("label")
-						.attr("for", p)
-						.text(common.positions[p]);
-		}
+		check_row.append("label")
+					.attr("for", p)
+					.text(common.positions[p]);
+	}
 }
 
 //doesn't need parameters since it can ask the checkboxes which data to show
@@ -153,36 +157,57 @@ function update() {
 
 	//but, let's remove and re-add because there's a deadline
 	svg.select("g." + common.group_axes).remove();
-	var axes = svg.append("g").attr("class", "axes");
+	var axes = svg.append("g").classed("axes", true);
 	common.xBottom(axes, xScale, "translate(0," + height + ")");
 	common.yLeft(axes, yScale,  "translate(" + common.margin.left + ",0)", width);
 
 	//line-maker function
 	var lineGen = common.lineGen.bind(this, xScale, yScale, age, stat_to_plot)();
 
-	svg.selectAll("path").remove();
-
 	//dataset line
-	svg.append("g").classed("line", true).append("svg:path")
-		   .attr("d", lineGen(data))
-		   .attr("stroke", common.colors.success)
-		   .attr("stroke-width", 2)
-		   .attr("fill", "none");
+	var line = svg.selectAll("path.statline")
+				.data(data);
 
-	//NICE-TO-HAVE: can we animate this instead of removing and re-adding?
-	svg.selectAll("g.points").remove();
+	//we'll only have an exit to fade out if we choose a plotting that has a
+	//different number of datapoints than our old line.exit()
+	line.exit()
+		.style("opacity", 1e-6)
+		.remove();
+
+	line = line.enter()
+		.append("svg:path") //if this gets inserted once, we shouldn't have an enter afterward
+			.classed("statline", true)
+			.attr("opacity", 1e-6)
+			.merge(line)
+			.attr("stroke", common.colors.success)
+			.attr("stroke-width", 2)
+			.attr("fill", "none")
+			.transition(transTime)
+				.attr("opacity", 1)
+			   .attr("d", lineGen(data))
+			   ;
 
 	//dataset points
-	svg.append("g").classed("points", true).selectAll("." + stat_to_plot)
-		   .data(data)
-		   .enter()
-		   .append("circle")
-		   .merge(svg)
-		   .attr("class", stat_to_plot)
-		   .attr("cx", function(d) { return xScale(d[age]); })
-		   .attr("cy", function(d) { return yScale(d[stat_to_plot]); })
-		   .attr("fill", common.colors.success)
-		   .attr("r","5");
+	var points = svg.selectAll("circle")
+		   .data(data);
+
+	//fade out old points not in the new selection
+	points.exit()
+			.transition(transTime)
+				.style("fill-opacity", 1e-6)
+				.remove();
+
+	//fade in new points
+	points.enter()
+			.append("circle")
+			.merge(points) //everything below applies to enter + update
+			.classed(stat_to_plot, true)
+			.attr("fill", common.colors.success)
+			.attr("r","5")
+			.transition(transTime)
+				.attr("cx", function(d) { return xScale(d[age]); })
+				.attr("cy", function(d) { return yScale(d[stat_to_plot]); })
+				;
 
 	common.linechart_mouseover(svg_container_id,function(d) {
 	   return "<div>" +

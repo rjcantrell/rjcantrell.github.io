@@ -25,12 +25,14 @@
 
 	common.tooltip_class = "d3-tip";
 	common.group_axes = "axes";
-	common.tooltip = function(id) {
-		id = id || "";
-		return d3.select("body")
-					.append("div")
-					.attr("class", common.tooltip_class)
-					.attr("id", id)
+	common.tooltip = function() {
+		var tip = d3.select("." + common.tooltip_class)
+				 .data([1]);
+
+		return tip.enter() //in case we haven't created this before, do it now
+				 	.append("div")
+					.merge(tip)
+					.classed(common.tooltip_class, true)
 					.style("display", "none")
 					.style("position", "absolute");
 	};
@@ -40,19 +42,23 @@
 		tooltip = common.tooltip(tip_id);
 		d3.selectAll("#" + container_id + " circle")
 			.on("mouseover", function(d) {
-				d3.select(this).attr("stroke", "white").attr("stroke-width", 3);
-				tooltip.html(produceHtmlFromD(d));
-				tooltip.style("display","block");
-				tooltip.style("top", (d3.event.pageY + common.padding) + "px");
-				tooltip.style("left", (d3.event.pageX + common.padding) + "px");
+				d3.select(this)
+					.attr("stroke", "white")
+					.attr("stroke-width", 3);
+
+				tooltip.html(produceHtmlFromD(d))
+						.style("display","block")
+						.style("top", (d3.event.pageY + common.padding) + "px")
+						.style("left", (d3.event.pageX + common.padding) + "px");
 			})
 			.on("mouseout",function(d) {
 				var oldColor = d3.select(this).attr("fill");
 				d3.select(this).attr("stroke", oldColor).attr("stroke-width", 1);
-				d3.select("body")
-					.select("#" + tip_id)
+				d3.select("." + common.tooltip_class)
 					.style("display","none");
-			});
+			})
+			;
+		return tooltip;
 	}
 
 	common.lineGen = function(xScale, yScale, xKey, yKey) {

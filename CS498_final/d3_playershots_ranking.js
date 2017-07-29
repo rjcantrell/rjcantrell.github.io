@@ -9,6 +9,7 @@ var goals = "goals_in_max_shotpct_year";
 var shot_pct = "max_shotpct";
 
 var legend = "scorers_legend";
+var font_height = 15;
 
 var pos_colors = {
     "Left Wing": common.colors.primary,
@@ -27,12 +28,9 @@ function initialize(svg_container_id, width, height) {
 }
 
 function update(data, svg_container_id, width, height) {
-
-    var font_height = 15;
-
     var axis_container = d3.select("div#" + svg_container_id + "_axis")
                                 .append("svg")
-                                .attr("width", width)
+                                .attr("width", width - 100)
                                 .attr("height", 25);
 
     //create SVG elements
@@ -81,10 +79,6 @@ function update(data, svg_container_id, width, height) {
 	xAxisGroup.attr("transform", "translate(0," + common.padding + ")")
     			.call(boundCustomXAxis);
 
-    //TODO: for each data element, plot a circle along the X axis
-                //color is driven by position
-
-    //TODO: add legend
     for (var p in pos_colors) {
         var legend_row = d3.select("div#" + legend)
                                 .append("div")
@@ -109,13 +103,16 @@ function update(data, svg_container_id, width, height) {
 
     //tooltips
     common.linechart_mouseover(svg_container_id, function(d) {
-       return "<div>" +
-                   "<div class='col-xs-7'><strong>Best Shot %:</strong></div>" +
-                   "<div class='col-xs-5'>" + d[shot_pct] + "</div>" +
-               "</div><br/>" +
-               "<div>" +
-                   "<div class='col-xs-7'><strong>Goals That Year:</strong></div>" +
-                   "<div class='col-xs-5'>" + d[goals] + "</div>" +
+       return "<div class='row'>" +
+                  "<div class='col-xs-12'>" + d[name] + "</div>" +
+              "</div>" +
+              "<div class='row'>" +
+                   "<div class='col-xs-9'><strong>Best Shot %:</strong></div>" +
+                   "<div class='col-xs-3'>" + d[shot_pct] + "</div>" +
+               "</div>" +
+               "<div class='row'>" +
+                   "<div class='col-xs-9'><strong>Goals That Year:</strong></div>" +
+                   "<div class='col-xs-3'>" + d[goals] + "</div>" +
                "</div>"
     });
 }
