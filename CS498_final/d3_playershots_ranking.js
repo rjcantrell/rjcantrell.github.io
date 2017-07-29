@@ -20,7 +20,7 @@ var pos_colors = {
 var name_width = 175;
 
 function initialize(svg_container_id, width, height) {
-	d3.csv("/skater_shots_summary.csv", function (error, data) {
+	d3.csv("skater_shots_summary.csv", function (error, data) {
 		if (error) { throw error; }
 		update(data, svg_container_id, width, height);
 	});

@@ -15,7 +15,7 @@ var avgcolor = this.common.colors.warning;
 
 function initialize(svg_container_id, width, height) {
 
-	d3.csv("/shotpct_team_by_year_summary.csv", function (error, data) {
+	d3.csv("shotpct_team_by_year_summary.csv", function (error, data) {
 		if (error) { throw error; }
 		update(data, svg_container_id, width, height);
 		//add_annotations();

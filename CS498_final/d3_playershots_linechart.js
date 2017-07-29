@@ -26,7 +26,7 @@ var skater_data = {
 };
 
 function initialize(svg_container_id, width, height) {
-	d3.csv("/skater_stats_summary.csv", function (error, data) {
+	d3.csv("skater_stats_summary.csv", function (error, data) {
 		if (error) { throw error; }
 
 		for (var p in common.positions) {
