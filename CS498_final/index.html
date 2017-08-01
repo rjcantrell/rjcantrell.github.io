@@ -28,6 +28,7 @@
 				navigation: true,
 				navigationPosition: 'right',
 				navigationTooltips: ['Introduction'
+                                    ,'Project Essay'
                                     ,'Scoring By Team Per Year'
                                     ,'Top Scoring-Percentage Players'
                                     ,'Scoring By Position By Age'
@@ -56,6 +57,8 @@
             $("#show_annotation3").on('click', function(e) {
                     $('#teamshots div.annotation3').popover('toggle');
             });
+
+            $("#down_arrow").tooltip();
 		}, false);
 	  </script>
   </head>
@@ -63,26 +66,30 @@
     <!-- the entire content of the page is set into a fullPage.js container to be scrolled -->
 	<div id="fullpage" class="container"> <!-- data-anchors="intro"> -->
         <!-- begin intro -->
-		<div class="section">
-			<div id="title" class="page-header">
-				<h1 align="center">He shoots... HE SCORES!</h1>
-				<h5 align="center">An exploration of scoring in the NHL, 1967-2017</h5>
-                <br/>
+        <br/>
+        <br/>
+		<div class="section page-header fp-completely">
+			<div id="title">
+				<h1>He shoots... <i>HE SCORES!</i></h1>
+				<h5>An exploration of scoring in the NHL, 1967-2017</h5>
+            </div>
 
-				<p>My visualization is designed as a martini-glass. The user is led on a single path through several non-interactive scenes, before being left at an interactive scene that allows them to chop away at the underlying data a bit. It even makes a half-hearted effort at responsive design by sizing all the charts based on the window size at the time of page-load. As in my midterm, we're chasing that age-old elusive question: What does it take to score? In the National Hockey League, I mean. The first scene sets a scene for general scoring ability across the league over time. The second diverts into the scorers themselves, and finally the third looks at it from the perspective of age and position. In this final scene, several controls are displayed so that the user can choose for themselves what to plot, and for whom to plot it.
+            <!-- "scroll down" indicator (also scrolls page when clicked) -->
+            <a id="down_arrow" data-toggle="tooltip" data-placement="right" title="Scroll to continue"
+             class="down visible" onclick="$.fn.fullpage.moveSectionDown(); return false;">
+                <div class="a"></div>
+            </a>
+        </div>
+        <div class="section">
+            <h2>Essay</h2>
+			<p>My visualization is designed as a martini-glass. The user is led on a single path through several non-interactive scenes, before being left at an interactive scene that allows them to chop away at the underlying data a bit. It even makes a half-hearted effort at responsive design by sizing all the charts based on the window size at the time of page-load. As in my midterm, we're chasing that age-old elusive question: What does it take to score? In the National Hockey League, I mean. The first scene sets a scene for general scoring ability across the league over time. The second diverts into the scorers themselves, and finally the third looks at it from the perspective of age and position. In this final scene, several controls are displayed so that the user can choose for themselves what to plot, and for whom to plot it.
 
-                <p>Each scene within my narrative viz has the structure of an 'annotated chart', as discussed in the lectures. Because each scroll of the page completely transitions between scenes in a single linear order, you could argue that overall, the viz functions as a slide show. The initial state of each scene plots the same stat (shot-percentage), to provide continuity and help the user keep their bearings in between each.
+            <p>Each scene within my narrative viz has the structure of an 'annotated chart', as discussed in the lectures. Because each scroll of the page completely transitions between scenes in a single linear order, you could argue that overall, the viz functions as a slide show. The initial state of each scene plots the same stat (shot-percentage), to provide continuity and help the user keep their bearings in between each.
 
-				<p>Data can be highlighted in several ways in this visualization. All charts display tooltips when hovering over data elements upon with the mouse. The first has additional Bootstrap annotations for selected years. Mouseover tooltips are cleared when the mouse exits the data element, and annotations are cleared when clicking the button that created them.
+			<p>Data can be highlighted in several ways in this visualization. All charts display tooltips when hovering over data elements upon with the mouse. The first has additional Bootstrap annotations for selected years. Mouseover tooltips are cleared when the mouse exits the data element, and annotations are cleared when clicking the button that created them.
 
-				<p>The final scene shows the best use of triggers and parameters. Parameters for the scene include which stat is being plotted, and which positions are included. The stat to be plotted is indicated by a radio-button alongside the viz, and the positions being plotted are indicated by checkboxes alongside the viz. Interaction with these radio buttons and checkboxes are triggers for the parameters to change, which in turn causes the viz to change state. Interactive controls are highlighted to the user with bright colors and bold font.
-				</p>
-
-                <!-- "scroll down" indicator (also scrolls page when clicked) -->
-				<a class="down visible" onclick="$.fn.fullpage.moveSectionDown(); return false;">
-					<div class="a"></div>
-				</a>
-			</div>
+			<p>The final scene shows the best use of triggers and parameters. Parameters for the scene include which stat is being plotted, and which positions are included. The stat to be plotted is indicated by a radio-button alongside the viz, and the positions being plotted are indicated by checkboxes alongside the viz. Interaction with these radio buttons and checkboxes are triggers for the parameters to change, which in turn causes the viz to change state. Interactive controls are highlighted to the user with bright colors and bold font.
+			</p>
 		</div>
         <!-- end intro -->
 
